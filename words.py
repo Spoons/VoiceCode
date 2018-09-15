@@ -79,7 +79,7 @@ class ReFormatRule(CompoundRule):
         return Text(formatted)
 
 class FormatRule(CompoundRule):
-    spec = ('[upper | natural] ( proper | camel | rel-path | abs-path | score | sentence | '
+    spec = ('[upper | natural] ( words | proper | camel | rel-path | abs-path | score | sentence | '
             'scope-resolve | jumble | dotword | dashword | natword | snakeword | brooding-narrative) [<dictation>] [bomb]')
     extras = [Dictation(name='dictation')]
 
@@ -98,26 +98,29 @@ class FormatRule(CompoundRule):
         words = [word.split('\\', 1)[0].replace('-', '') for word in words]
         if words[0].lower() in ('upper', 'natural'):
             del words[0]
+        #
+        # bomb = None
+        # if 'bomb' in words:
+        #     bomb_point = words.index('bomb')
+        #     if bomb_point+1 < len(words):
+        #         bomb = words[bomb_point+1 : ]
+        #     words = words[ : bomb_point]
+        local_format_rules = ['words']
+        formatted = ""
+        print words
+        if words[0] not in local_format_rules:
+            function = getattr(aenea.format, 'format_%s' % words[0].lower())
+            formatted = function(words[1:])
+            global lastFormatRuleWords
+            lastFormatRuleWords = words[1:]
 
-        bomb = None
-        if 'bomb' in words:
-            bomb_point = words.index('bomb')
-            if bomb_point+1 < len(words):
-                bomb = words[bomb_point+1 : ]
-            words = words[ : bomb_point]
-
-        function = getattr(aenea.format, 'format_%s' % words[0].lower())
-        formatted = function(words[1:])
-        global lastFormatRuleWords
-        lastFormatRuleWords = words[1:]
-
-        global lastFormatRuleLength
-        lastFormatRuleLength = len(formatted)
+            global lastFormatRuleLength
+            lastFormatRuleLength = len(formatted)
+        else:
+            if words[0] in 'words':
+                print "words yo"
+                formatted = ' '.join([w.lower() for w in words[1:]])
 
         # empty formatted causes problems here
         print "  ->", formatted
-        if bomb != None:
-            return Text(formatted) + Mimic(' '.join(bomb))
-        else:
-            return Text(formatted)
-
+        return Text(formatted)
