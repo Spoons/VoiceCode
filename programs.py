@@ -52,14 +52,15 @@ class ProgramsRule(MappingRule):
         "command (git|get)": Text("git "),
         "command (git|get) <gitcommand>": Text("git %(gitcommand)s "),
         "command vim": Text("vim "),
-        #"command C D": Text("cd "),
-        #"command list": Text("ls "),
+        "command atom": Text("atom "),
+        "command CD": Text("cd "),
+        "command list": Text("ls "),
         "command make": Text("make "),
         "command make clean": Text("make clean "),
-        #"command cat": Text("cat "),
+        "command cat": Text("cat "),
         "command (grep|grip)": Text("grep "),
-        #"command background": Text("bg "),
-        #"command foreground": Text("fg "),
+
+        "up deer": Text("../"),
 
         # web browser
         'address bar': Key('a-d'),
@@ -72,17 +73,17 @@ class ProgramsRule(MappingRule):
         'open [new] tab': Key('c-t'),
         'close tab': Key('c-w'),
 
-        # Xfce-like desktop environment commands
-        '(desk|desktop) left [<n>]': Key('ca-left:%(n)d'),
-        '(desk|desktop) right [<n>]': Key('ca-right:%(n)d'),
-        '(desk|desktop) up [<n>]': Key('ca-up:%(n)d'),
-        '(desk|desktop) down [<n>]': Key('ca-down:%(n)d'),
-        '(desk|desktop) (top|upper) [<n>]': Key('c-f1, ca-left, ca-right:%(n)d'),
-        '(desk|desktop) (bottom|lower) [<n>]': Key('c-f1, ca-down, ca-left, ca-right:%(n)d'),
-        'switch window [<n>]': Key('a-tab:%(n)d'),
-        'really close window': Key('a-f4'),
-        'maximize window': Key('a-f10'),
-        'minimize window': Key('a-f9'),
+        # # Xfce-like desktop environment commands
+        # '(desk|desktop) left [<n>]': Key('ca-left:%(n)d'),
+        # '(desk|desktop) right [<n>]': Key('ca-right:%(n)d'),
+        # '(desk|desktop) up [<n>]': Key('ca-up:%(n)d'),
+        # '(desk|desktop) down [<n>]': Key('ca-down:%(n)d'),
+        # '(desk|desktop) (top|upper) [<n>]': Key('c-f1, ca-left, ca-right:%(n)d'),
+        # '(desk|desktop) (bottom|lower) [<n>]': Key('c-f1, ca-down, ca-left, ca-right:%(n)d'),
+        # 'switch window [<n>]': Key('a-tab:%(n)d'),
+        # 'really close window': Key('a-f4'),
+        # 'maximize window': Key('a-f10'),
+        # 'minimize window': Key('a-f9'),
     }
     extras = [
         Dictation("text"),
