@@ -98,13 +98,7 @@ class FormatRule(CompoundRule):
         words = [word.split('\\', 1)[0].replace('-', '') for word in words]
         if words[0].lower() in ('upper', 'natural'):
             del words[0]
-        #
-        # bomb = None
-        # if 'bomb' in words:
-        #     bomb_point = words.index('bomb')
-        #     if bomb_point+1 < len(words):
-        #         bomb = words[bomb_point+1 : ]
-        #     words = words[ : bomb_point]
+
         local_format_rules = ['words']
         formatted = ""
         print words

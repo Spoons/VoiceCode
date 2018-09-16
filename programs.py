@@ -59,6 +59,7 @@ class ProgramsRule(MappingRule):
         "command make clean": Text("make clean "),
         "command cat": Text("cat "),
         "command (grep|grip)": Text("grep "),
+        "command and cater": Text("mkdir "),
 
         "up deer": Text("../"),
 

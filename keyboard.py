@@ -38,7 +38,7 @@ if 'semicolon' not in typeables:
     typeables["semicolon"] = keyboard.get_typeable(char=';')
 
 
-release = Key("shift:up, ctrl:up, alt:up")
+release = Key("shift:up, ctrl:up, alt:up, win:up")
 
 
 def cancel_and_sleep(text=None, text2=None):
@@ -59,7 +59,7 @@ def cancel_and_sleep(text=None, text2=None):
 specialCharMap = {
     "(bar|vertical bar|pipe)": "|",
     "(dash|minus|hyphen)": "-",
-    "dit": ".",
+    "(dot|period)": ".",
     "comma": ",",
     "backslash": "\\",
     "underscore": "_",
@@ -77,38 +77,10 @@ specialCharMap = {
     "equal": "=",
     "plus": "+",
     "space": " ",
-
     "bang": "!",
     "question": "?",
     "caret": "^",
-    # some other symbols I haven't imported yet, lazy sorry
-    # 'ampersand': Key('ampersand'),
-    # 'apostrophe': Key('apostrophe'),
-    # 'asterisk': Key('asterisk'),
-    # 'at': Key('at'),
-    # 'backslash': Key('backslash'),
-    # 'backtick': Key('backtick'),
-    # 'bar': Key('bar'),
-    # 'caret': Key('caret'),
-    # 'colon': Key('colon'),
-    # 'comma': Key('comma'),
-    # 'dollar': Key('dollar'),
-    # #'(dot|period)': Key('dot'),
-    # 'double quote': Key('dquote'),
-    # 'equal': Key('equal'),
-    # 'bang': Key('exclamation'),
-    # 'hash': Key('hash'),
-    # 'hyphen': Key('hyphen'),
-    # 'minus': Key('minus'),
-    # 'percent': Key('percent'),
-    # 'plus': Key('plus'),
-    # 'question': Key('question'),
-    # # Getting Invalid key name: 'semicolon'
-    # #'semicolon': Key('semicolon'),
-    # 'slash': Key('slash'),
-    # '[single] quote': Key('squote'),
-    # 'tilde': Key('tilde'),
-    # 'underscore | score': Key('underscore'),
+    'backtick': "`",
 }
 
 # Modifiers for the press-command.
@@ -139,11 +111,11 @@ letterMap = {
     "(india|indigo|ish) ": "i",
     "(juliet|julia) ": "j",
     "(kilo) ": "k",
-    "(lima|lion|line|lie) ": "l",
+    "(lima|lion|line|lie|llama) ": "l",
     "(mike) ": "m",
     "(november|noy) ": "n",
     "(Oscar|osh) ": "o",
-    "(papa|poppa|pom) ": "p",
+    "(papa|poppa|pom|picard) ": "p",
     "(quebec|quiche|queen) ": "q",
     "(romeo|ree) ": "r",
     "(sierra|soy) ": "s",
@@ -236,10 +208,7 @@ grammarCfg.cmd.map = Item(
         "right [<n>]": Key("right:%(n)d"),
         "page up [<n>]": Key("pgup:%(n)d"),
         "page down [<n>]": Key("pgdown:%(n)d"),
-        #"up <n> (page|pages)": Key("pgup:%(n)d"),
-        #"down <n> (page|pages)": Key("pgdown:%(n)d"),
-        #"left <n> (word|words)": Key("c-left/3:%(n)d/10"),
-        #"right <n> (word|words)": Key("c-right/3:%(n)d/10"),
+
         "home": Key("home"),
         "end": Key("end"),
         "doc home": Key("c-home/3"),
@@ -249,13 +218,12 @@ grammarCfg.cmd.map = Item(
         "space [<n>]": release + Key("space:%(n)d"),
         "(enter|slap|slop) [<n>]": release + Key("enter:%(n)d"),
         "tab [<n>]": Key("tab:%(n)d"),
-        ###"delete [<n>]": Key("del/3:%(n)d"),
+
         "delete [this] line": Key("home, s-end, del"),  # @IgnorePep8
         "backspace [<n>]": release + Key("backspace:%(n)d"),
         "application key": release + Key("apps/3"),
         "win key": release + Key("win/3"),
-        #"paste [that]": Function(paste_command),
-        #"copy [that]": Function(copy_command),
+
         "cut [that]": release + Key("c-x/3"),
         "select all": release + Key("c-a/3"),
         "[(hold|press)] alt": Key("alt:down/3"),
@@ -264,6 +232,8 @@ grammarCfg.cmd.map = Item(
         "release shift": Key("shift:up"),
         "[(hold|press)] control": Key("ctrl:down/3"),
         "release control": Key("ctrl:up"),
+        "[(hold|press)] super": Key("win:down/3"),
+        "release super": Key("win:up"),
         "release [all]": release,
         "press key <pressKey>": Key("%(pressKey)s"),
         # Closures.
@@ -291,12 +261,10 @@ grammarCfg.cmd.map = Item(
         'langle [<n>]': Key('langle:%(n)d'),
         'lace [<n>]':   Key('lbrace:%(n)d'),
         '(lack|lair) [<n>]':   Key('lbracket:%(n)d'),
-        #'(laip|len) [<n>]':   Key('lparen:%(n)d'),
         'len [<n>]':    Key('lparen:%(n)d'),
         'rangle [<n>]': Key('rangle:%(n)d'),
         'race [<n>]':   Key('rbrace:%(n)d'),
         '(rack|rare) [<n>]':   Key('rbracket:%(n)d'),
-        #'(raip|ren|wren) [<n>]':   Key('rparen:%(n)d'),
         '(ren|wren) [<n>]':   Key('rparen:%(n)d'),
 
         "act [<n>]": Key("escape:%(n)d"),
@@ -358,5 +326,3 @@ class KeystrokeRule(MappingRule):
     defaults = {
         "n": 1,
     }
-
-
