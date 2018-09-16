@@ -7,7 +7,7 @@ import keyboard
 import words
 import programs
 
-release = Key("shift:up, ctrl:up, alt:up")
+release = Key("shift:up, ctrl:up, alt:up, win:up")
 
 alternatives = []
 alternatives.append(RuleRef(rule=keyboard.KeystrokeRule()))

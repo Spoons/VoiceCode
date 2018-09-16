@@ -222,7 +222,7 @@ grammarCfg.cmd.map = Item(
         "delete [this] line": Key("home, s-end, del"),  # @IgnorePep8
         "backspace [<n>]": release + Key("backspace:%(n)d"),
         "application key": release + Key("apps/3"),
-        "win key": release + Key("win/3"),
+        "super key": release + Key("win/3"),
 
         "cut [that]": release + Key("c-x/3"),
         "select all": release + Key("c-a/3"),
