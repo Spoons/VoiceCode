@@ -267,6 +267,10 @@ grammarCfg.cmd.map = Item(
         '(rack|rare) [<n>]':   Key('rbracket:%(n)d'),
         '(ren|wren) [<n>]':   Key('rparen:%(n)d'),
 
+        # Programming shortcuts
+        'speakual': Text(' = '),
+        'sift': Text('if '),
+
         "act [<n>]": Key("escape:%(n)d"),
         "calm [<n>]": Key("comma:%(n)d"),
         'into': Key('space,bar,space'),
