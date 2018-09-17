@@ -20,6 +20,7 @@ class AwesomeRule(MappingRule):
         'awesome width shrink': Key('w-l'),
         'awesome layout': Key('w-space'),
         'awesome window next': Key('w-o'),
+        'awesome tag <n>': Key('ws-%(n)d'),
 
     }
     extras = [

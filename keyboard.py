@@ -187,8 +187,6 @@ pressKeyMap.update(functionKeyMap)
 
 
 def handle_word(text):
-    #words = map(list, text)
-    #print text
     words = str(text).split()
     print 'word (', words, ')'
     if len(words) > 0:
@@ -268,8 +266,8 @@ grammarCfg.cmd.map = Item(
         '(ren|wren) [<n>]':   Key('rparen:%(n)d'),
 
         # Programming shortcuts
-        'speakual': Text(' = '),
-        'sift': Text('if '),
+        # 'speakual': Text(' = '),
+        # 'sift': Text('if '),
 
         "act [<n>]": Key("escape:%(n)d"),
         "calm [<n>]": Key("comma:%(n)d"),

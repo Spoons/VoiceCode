@@ -80,7 +80,7 @@ class ReFormatRule(CompoundRule):
 
 class FormatRule(CompoundRule):
     spec = ('[upper | natural] ( words | proper | camel | rel-path | abs-path | score | sentence | '
-            'scope-resolve | jumble | dotword | dashword | natword | snakeword | brooding-narrative) [<dictation>] [bomb]')
+            'scope-resolve | jumble | dotword | dashword | natword | snakeword | brooding-narrative) [<dictation>]')
     extras = [Dictation(name='dictation')]
 
     def value(self, node):
@@ -114,6 +114,7 @@ class FormatRule(CompoundRule):
             if words[0] in 'words':
                 print "words yo"
                 formatted = ' '.join([w.lower() for w in words[1:]])
+                formatted = formatted + ' '
 
         # empty formatted causes problems here
         print "  ->", formatted
