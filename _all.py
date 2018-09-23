@@ -7,16 +7,18 @@ import keyboard
 import words
 import programs
 import awesomewm
+import atom
 
 release = Key("shift:up, ctrl:up, alt:up, win:up")
 
 alternatives = []
 alternatives.append(RuleRef(rule=keyboard.KeystrokeRule()))
 alternatives.append(RuleRef(rule=words.FormatRule()))
-alternatives.append(RuleRef(rule=words.ReFormatRule()))
-alternatives.append(RuleRef(rule=words.NopeFormatRule()))
+#alternatives.append(RuleRef(rule=words.ReFormatRule()))
+# alternatives.append(RuleRef(rule=words.NopeFormatRule()))
 alternatives.append(RuleRef(rule=programs.ProgramsRule()))
 alternatives.append(RuleRef(rule=awesomewm.AwesomeRule()))
+alternatives.append(RuleRef(rule=atom.AtomRule()))
 root_action = Alternative(alternatives)
 
 sequence = Repetition(root_action, min=1, max=16, name="sequence")

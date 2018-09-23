@@ -9,7 +9,7 @@ class AwesomeRule(MappingRule):
         'awesome menu': Key('w-w'),
         'awesome maximize': Key('w-m'),
         'awesome kill': Key('ws-c'),
-        'next window [<n>]': Key('w-j:%(n)d'), []
+        'next window [<n>]': Key('w-j:%(n)d'),
         'previous window [<n>]': Key('w-k:%(n)d'),
         'awesome urgent': Key('w-u'),
         'desktop <n>': Key('w-%(n)d'),
