@@ -112,9 +112,7 @@ class FormatRule(CompoundRule):
             lastFormatRuleLength = len(formatted)
         else:
             if words[0] in 'words':
-                print "words yo"
                 formatted = ' '.join([w.lower() for w in words[1:]])
-                formatted = formatted + ' '
 
         # empty formatted causes problems here
         print "  ->", formatted

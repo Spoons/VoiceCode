@@ -242,10 +242,13 @@ grammarCfg.cmd.map = Item(
         "quotes": Key("dquote/3, dquote/3, left/3"),
         "backticks": Key("backtick:2, left"),
         "single quotes": Key("squote, squote, left/3"),
+
         # Shorthand multiple characters.
         "double <char>": Text("%(char)s%(char)s"),
         "triple <char>": Text("%(char)s%(char)s%(char)s"),
         "double escape": Key("escape, escape"),  # Exiting menus.
+        'triple tab': Key('tab/3') * 3,
+        'triple back tab': Key('s-tab/3') * 3,
         # Punctuation and separation characters, for quick editing.
         "colon [<n>]": Key("colon/2:%(n)d"),
         "semi-colon [<n>]": Key("semicolon/2:%(n)d"),
@@ -264,10 +267,6 @@ grammarCfg.cmd.map = Item(
         'race [<n>]':   Key('rbrace:%(n)d'),
         '(rack|rare) [<n>]':   Key('rbracket:%(n)d'),
         '(ren|wren) [<n>]':   Key('rparen:%(n)d'),
-
-        # Programming shortcuts
-        # 'speakual': Text(' = '),
-        # 'sift': Text('if '),
 
         "act [<n>]": Key("escape:%(n)d"),
         "calm [<n>]": Key("comma:%(n)d"),
@@ -294,14 +293,16 @@ grammarCfg.cmd.map = Item(
 
         'word <text>': Function(handle_word),
         'number <num>': Text("%(num)d"),
-        'change <text> to <text2>': Key("home, slash") + Text("%(text)s") + Key("enter, c, e") + Text("%(text2)s") + Key("escape"),
+        #'change <text> to <text2>': Key("home, slash") + Text("%(text)s") + Key("enter, c, e") + Text("%(text2)s") + Key("escape"),
 
         # Text corrections.
-        "(add|fix) missing space": Key("c-left/3, space, c-right/3"),
-        "(delete|remove) (double|extra) (space|whitespace)": Key("c-left/3, backspace, c-right/3"),  # @IgnorePep8
-        "(delete|remove) (double|extra) (type|char|character)": Key("c-left/3, del, c-right/3"),  # @IgnorePep8
+        # "(add|fix) missing space": Key("c-left/3, space, c-right/3"),
+        # "(delete|remove) (double|extra) (space|whitespace)": Key("c-left/3, backspace, c-right/3"),  # @IgnorePep8
+        # "(delete|remove) (double|extra) (type|char|character)": Key("c-left/3, del, c-right/3"),  # @IgnorePep8
         # Microphone sleep/cancel started dictation.
         "[<text>] (go to sleep|cancel and sleep) [<text2>]": Function(cancel_and_sleep),  # @IgnorePep8
+
+        #"click": Mouse("right"),
     },
     namespace={
         "Key": Key,
