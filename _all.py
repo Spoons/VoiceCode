@@ -15,7 +15,7 @@ alternatives = []
 alternatives.append(RuleRef(rule=keyboard.KeystrokeRule()))
 alternatives.append(RuleRef(rule=words.FormatRule()))
 #alternatives.append(RuleRef(rule=words.ReFormatRule()))
-# alternatives.append(RuleRef(rule=words.NopeFormatRule()))
+#alternatives.append(RuleRef(rule=words.NopeFormatRule()))
 alternatives.append(RuleRef(rule=programs.ProgramsRule()))
 alternatives.append(RuleRef(rule=awesomewm.AwesomeRule()))
 alternatives.append(RuleRef(rule=atom.AtomRule()))
@@ -25,7 +25,7 @@ sequence = Repetition(root_action, min=1, max=16, name="sequence")
 
 class RepeatRule(CompoundRule):
     # Here we define this rule's spoken-form and special elements.
-    spec = "<sequence> [[[and] repeat [that]] <n> times]"
+    spec = "<sequence> [[and repeat that] <n> times]"
     extras = [
         sequence,  # Sequence of actions defined above.
         IntegerRef("n", 1, 100),  # Times to repeat the sequence.

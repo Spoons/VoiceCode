@@ -2,6 +2,7 @@ from aenea import *
 
 
 class AtomRule(MappingRule):
+    exported = False
     mapping = {
         #Utility and tree
         'atom save': Key('c-s'),
@@ -27,7 +28,7 @@ class AtomRule(MappingRule):
         # Movement
         'file top': Key('c-home'),
         'file bottom': Key('c-end'),
-        # 'go to line <ln> [<ln>]': Key('c-g\3, %(ln)d/3, colon/3, %(ln)d/3, enter'), #too complex?
+        'go to line <num>': Key('c-g') + Text('%(num)d') + Key('enter'), #too complex?
 
         # Selection
         'mark line': Key('c-l'),
@@ -37,17 +38,18 @@ class AtomRule(MappingRule):
         'mark left [<n>]': Key('s-left:%(n)d/3'),
         'mark right [<n>]': Key('s-right:%(n)d/3'),
         'mark lope [<n>]':  Key('cs-left:%(n)d'),  # Selected beginning of word
-        'mark (yope|rope) [<n>]':  Key('cs-right:%(n)d'),  # Selected end of word
-        'mark document top': Key('s-end'),
-        'mark document bottom': Key('s-home'),
-        #todo: Selected top and bottom of file
+        'mark rope [<n>]':  Key('cs-right:%(n)d'),  # Selected end of word
+        'mark document top': Key('cs-end'),
+        'mark document bottom': Key('cs-home'),
+        'mark home': Key('c-home'),
+        'mark end': Key('c-end'),
+        #todo: mark to end of line and mark to first character
 
     }
     extras = [
         IntegerRef("n", 1, 9),
-        IntegerRef("ln", 1, 9),
+        IntegerRef("num", 0, 100),
     ]
     defaults = {
         "n": 1,
-        "ln": 1,
     }

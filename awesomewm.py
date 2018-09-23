@@ -2,6 +2,7 @@ from aenea import *
 
 
 class AwesomeRule(MappingRule):
+    exported = False
     mapping = {
         'awesome run': Key('w-r'),
         'awesome restart': Key('ws-r'),
