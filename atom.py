@@ -28,8 +28,18 @@ class AtomRule(MappingRule):
         'top file': Key('c-home'),
         'end file': Key('c-end'),
         'line <ln> [<lc>]': Key('c-g\3') + Key('%(ln)d\3, colon\3, %(lc)d\3, enter'),
+
+        # Selection
         'select line': Key('c-L'),
         'select all': Key('c-A'),
-        'select up': Key('')
+        'select up [<n>]': Key('s-up:%(n)d\3'),
+        'select down [<n>]': Key('s-down:%(n)d\3'),
+        'select left [<n>]': Key('s-left:%(n)d\3'),
+        'select right [<n>]': Key('s-right:%(n)d\3'),
+        'select lope [<n>]':  Key('cs-left:%(n)d'),  # Selected beginning of word
+        'select (yope|rope) [<n>]':  Key('cs-right:%(n)d'),  # Selected end of word
+        'select end': Key('s-end'),
+        'select beginning': Key('s-home'),
+        # todo: Selected top and bottom of file
 
     }
