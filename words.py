@@ -79,7 +79,7 @@ class ReFormatRule(CompoundRule):
         return Text(formatted)
 
 class FormatRule(CompoundRule):
-    spec = ('[upper | natural] ( words | proper | camel | rel-path | abs-path | score | sentence | '
+    spec = ('[upper | natural] ( phrase | proper | camel | rel-path | abs-path | score | sentence | '
             'scope-resolve | jumble | dotword | dashword | natword | snakeword | brooding-narrative) [<dictation>]')
     extras = [Dictation(name='dictation')]
 
@@ -99,7 +99,7 @@ class FormatRule(CompoundRule):
         if words[0].lower() in ('upper', 'natural'):
             del words[0]
 
-        local_format_rules = ['words']
+        local_format_rules = ['phrase']
         formatted = ""
         print words
         if words[0] not in local_format_rules:
@@ -111,7 +111,7 @@ class FormatRule(CompoundRule):
             global lastFormatRuleLength
             lastFormatRuleLength = len(formatted)
         else:
-            if words[0] in 'words':
+            if str(words[0]) == 'phrase':
                 formatted = ' '.join([w.lower() for w in words[1:]])
 
         # empty formatted causes problems here
