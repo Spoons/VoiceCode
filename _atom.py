@@ -2,7 +2,7 @@ from aenea import *
 
 
 class AtomRule(MappingRule):
-    exported = False
+    exported = True
     mapping = {
         #Utility and tree
         'atom save': Key('c-s'),
@@ -55,3 +55,19 @@ class AtomRule(MappingRule):
     defaults = {
         "n": 1,
     }
+
+
+atom_context = aenea.AeneaContext(
+    ProxyAppContext(cls_name='Atom', cls='Atom'),
+    AppContext(executable='atom'))
+
+
+grammar = Grammar("atom", context=atom_context)
+grammar.add_rule(AtomRule())
+grammar.load()
+
+def unload():
+    global grammar
+    if grammar:
+        grammar.unload()
+grammar = None
