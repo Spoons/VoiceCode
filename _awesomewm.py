@@ -2,7 +2,7 @@ from aenea import *
 
 
 class AwesomeRule(MappingRule):
-    exported = False
+    exported = True
     mapping = {
         'awesome run': Key('w-r/10'),
         'awesome restart': Key('ws-r'),
@@ -13,17 +13,22 @@ class AwesomeRule(MappingRule):
         'next window [<n>]': Key('w-j:%(n)d/5'),
         'previous window [<n>]': Key('w-k:%(n)d/5'),
         'awesome urgent': Key('w-u'),
-        'desktop <n>': Key('w-%(n)d/10'),
-        'next [screen|monitor|display] [<n>]': Key('cw-j:%(n)d/5'),
-        'previous [screen|monitor|display] [<n>]': Key('cw-k:%(n)d/5'),
-        'awesome switch': Key('ws-j/5'),
-        'awesome switch last': Key('ws-k/5'),
+
+        'next (screen|monitor|display) [<n>]': Key('cw-j:%(n)d/5'),
+        'previous (screen|monitor|display) [<n>]': Key('cw-k:%(n)d/5'),
+        'awesome change (screen|monitor|display) [<n>]': Key('w-o:%(n)d/5'),
+
+        'awesome (switch|move)': Key('ws-j/5'),
+        'awesome (switch|move) last': Key('ws-k/5'),
         'awesome [width] left [<n>]': Key('w-h:%(n)d/5'),
         'awesome [width] right [<n>]': Key('w-l:%(n)d/5'),
+
         'awesome layout': Key('w-space/5'),
         'awesome swap': Key('w-space/5'),
-        'awesome window move [<n>]': Key('w-o:%(n)d/5'),
+
+        'desktop <n>': Key('w-%(n)d/10'),
         'awesome tag <n>': Key('ws-%(n)d/5'),
+
         'open firefox': Key('w-r/10') + Text("firefox") + Key('enter/10'),
 
     }
@@ -33,3 +38,14 @@ class AwesomeRule(MappingRule):
     defaults = {
         "n": 1,
     }
+
+awesome_context = aenea.ProxyPlatformContext('linux')
+grammar = Grammar("awesome", context=awesome_context)
+grammar.add_rule(AwesomeRule())
+grammar.load()
+
+def unload():
+    global grammar
+    if grammar:
+        grammar.unload()
+grammar = None
