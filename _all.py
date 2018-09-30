@@ -20,7 +20,6 @@ alternatives.append(RuleRef(rule=programs.ProgramsRule()))
 #alternatives.append(RuleRef(rule=awesomewm.AwesomeRule()))
 #alternatives.append(RuleRef(rule=atom.AtomRule()))
 root_action = Alternative(alternatives)
-
 sequence = Repetition(root_action, min=1, max=16, name="sequence")
 
 class RepeatRule(CompoundRule):

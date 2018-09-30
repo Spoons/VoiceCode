@@ -78,13 +78,22 @@ lastFormatRuleLength = 0
 #         lastFormatRuleLength = len(formatted)
 #         return Text(formatted)
 def format_phrase(words):
-    formatted = ' '.join([w.lower() for w in words[1:]])
-    return(formatted)
+    string = ' '.join([w.lower() for w in words[1:]])
+    return(string)
+    
+def format_with_spaces(words):
+    words.append("")
+    string = ' '.join([w.lower() for w in words[1:]])
+    return(string)
+
 
 class FormatRule(CompoundRule):
-    spec = ('[upper | natural] ( phrase | proper | camel | rel-path | abs-path | score | sentence | '
+    spec = ('[upper | natural] ( phrase | spocks | proper | camel | rel-path | abs-path | score | sentence | '
             'scope-resolve | jumble | dotword | dashword | natword | snakeword | brooding-narrative) [<dictation>] [reserved]')
     extras = [Dictation(name='dictation')]
+
+    local_format_rules = ['phrase', 'spocks']
+
 
     def value(self, node):
         words = node.words()
@@ -92,8 +101,6 @@ class FormatRule(CompoundRule):
             words = words[:-1]
         print "format rule:", words
 
-        if words.length == 1:
-            print "one"
         uppercase = words[0] == 'upper'
         lowercase = words[0] != 'natural'
 
@@ -106,10 +113,9 @@ class FormatRule(CompoundRule):
         if words[0].lower() in ('upper', 'natural'):
             del words[0]
 
-        local_format_rules = ['phrase']
         formatted = ""
         print words
-        if words[0] not in local_format_rules:
+        if words[0] not in self.local_format_rules:
             function = getattr(aenea.format, 'format_%s' % words[0].lower())
             formatted = function(words[1:])
             global lastFormatRuleWords
@@ -120,6 +126,8 @@ class FormatRule(CompoundRule):
         else:
             if str(words[0]) == 'phrase':
                 formatted = format_phrase(str(words))
+            if str(words[0]) == 'spocks':
+                formatted = format_with_spaces(words)
 
         # empty formatted causes problems here
         print "  ->", formatted

@@ -59,7 +59,7 @@ def cancel_and_sleep(text=None, text2=None):
 specialCharMap = {
     "(bar|vertical bar|pipe)": "|",
     "(dash|minus|hyphen)": "-",
-    "(dot|period)": ".",
+    "(dit|period)": ".",
     "comma": ",",
     "backslash": "\\",
     "underscore": "_",
@@ -103,11 +103,11 @@ letterMap = {
     "(alpha|arch)": "a",
     "(bravo|brav) ": "b",
     "(charlie|char) ": "c",
-    "(delta|del) ": "d",
+    "(delta|dell) ": "d",
     "(echo|eck) ": "e",
     "(foxtrot|fox) ": "f",
     "(golf) ": "g",
-    "(hotel) ": "h",
+    "(hotel|hark) ": "h",
     "(indigo|ish) ": "i",
     "(julia) ": "j",
     "(kilo) ": "k",
@@ -123,7 +123,7 @@ letterMap = {
     "(uniform|umm) ": "u",
     "(victor|van) ": "v",
     "(whiskey|wes) ": "w",
-    "(x-ray) ": "x",
+    "(x-ray|trex) ": "x",
     "(yankee|yaa) ": "y",
     "(zulu) ": "z",
 }
@@ -146,6 +146,7 @@ numberMap = {
     "eight": "8",
     "nine": "9",
 }
+
 
 controlKeyMap = {
     "left": "left",
@@ -293,6 +294,7 @@ grammarCfg.cmd.map = Item(
 
         'word <text>': Function(handle_word),
         'number <num>': Text("%(num)d"),
+
         #'change <text> to <text2>': Key("home, slash") + Text("%(text)s") + Key("enter, c, e") + Text("%(text2)s") + Key("escape"),
 
         # Text corrections.
@@ -310,13 +312,12 @@ grammarCfg.cmd.map = Item(
     }
 )
 
-
 class KeystrokeRule(MappingRule):
     exported = False
     mapping = grammarCfg.cmd.map
     extras = [
         IntegerRef("n", 1, 100),
-        IntegerRef("num", 0, 1000000),
+        IntegerRef("num", 0, 1000),
         Dictation("text"),
         Dictation("text2"),
         Choice("char", specialCharMap),

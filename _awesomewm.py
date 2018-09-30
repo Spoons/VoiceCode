@@ -30,6 +30,8 @@ class AwesomeRule(MappingRule):
         'awesome tag <n>': Key('ws-%(n)d/5'),
 
         'open firefox': Key('w-r/10') + Text("firefox") + Key('enter/10'),
+        'open workrave': Key('w-r/10') + Text("workrave") + Key('enter/10'),
+
 
     }
     extras = [
