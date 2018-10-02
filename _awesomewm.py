@@ -14,8 +14,8 @@ class AwesomeRule(MappingRule):
         'focus up [<n>]': Key('w-l:%(n)d/10'),
         'focus down [<n>]': Key('w-j:%(n)d/10'),
 
-        'width increase [<n>]': Key('as-h:%(n)d/5'),
-        'width shrink [<n>]': Key('as-l:%(n)d/5'),
+        'width shrink [<n>]': Key('as-h:%(n)d/5'),
+        'width increase [<n>]': Key('as-l:%(n)d/5'),
 
         'awesome layout': Key('w-space/5'),
 
