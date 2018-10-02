@@ -81,6 +81,7 @@ specialCharMap = {
     "question": "?",
     "caret": "^",
     'backtick': "`",
+    "tilde": "~",
 }
 
 # Modifiers for the press-command.
