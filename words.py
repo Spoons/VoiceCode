@@ -87,6 +87,8 @@ def format_with_spaces(words):
     return(string)
 
 
+mixed_dictation = Alternative([Dictation(), saved_words_list])
+
 class FormatRule(CompoundRule):
     spec = ('[upper | natural] ( phrase | spocks | proper | camel | rel-path | abs-path | score | sentence | '
             'scope-resolve | jumble | dotword | dashword | natword | snakeword | brooding-narrative) [<dictation>] [reserved]')
