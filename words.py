@@ -80,7 +80,7 @@ lastFormatRuleLength = 0
 def format_phrase(words):
     string = ' '.join([w.lower() for w in words[1:]])
     return(string)
-    
+
 def format_with_spaces(words):
     words.append("")
     string = ' '.join([w.lower() for w in words[1:]])
@@ -93,7 +93,6 @@ class FormatRule(CompoundRule):
     extras = [Dictation(name='dictation')]
 
     local_format_rules = ['phrase', 'spocks']
-
 
     def value(self, node):
         words = node.words()
@@ -125,7 +124,7 @@ class FormatRule(CompoundRule):
             lastFormatRuleLength = len(formatted)
         else:
             if str(words[0]) == 'phrase':
-                formatted = format_phrase(str(words))
+                formatted = format_phrase(words)
             if str(words[0]) == 'spocks':
                 formatted = format_with_spaces(words)
 
