@@ -14,32 +14,9 @@ import aenea.vocabulary
 import aenea.configuration
 import aenea.format
 
-from aenea import (
-    AeneaContext,
-    AppContext,
-    Alternative,
-    CompoundRule,
-    Dictation,
-    DictList,
-    DictListRef,
-    Grammar,
-    IntegerRef,
-    Literal,
-    ProxyAppContext,
-    MappingRule,
-    NeverContext,
-    Repetition,
-    RuleRef,
-    Sequence
-)
+from aenea import *
 
-from aenea import (
-    Key,
-    Text
-)
-
-
-lastFormatRuleLength = 0
+#lastFormatRuleLength = 0
 # lastFormatRuleWords = []
 # class NopeFormatRule(CompoundRule):
 #     spec = ('nope')
@@ -86,13 +63,15 @@ def format_with_spaces(words):
     string = ' '.join([w.lower() for w in words[1:]])
     return(string)
 
-
-mixed_dictation = Alternative([Dictation(), saved_words_list])
+saved_words = ['sudo', 'num', 'int', 'void']
+saved_words_list = List("saved_words_list", saved_words)
+saved_words_ref = ListRef(None, saved_words_list)
+mixed_dictation = Alternative([Dictation(), saved_words_ref], "mixed_dictation")
 
 class FormatRule(CompoundRule):
-    spec = ('[upper | natural] ( phrase | spocks | proper | camel | rel-path | abs-path | score | sentence | '
-            'scope-resolve | jumble | dotword | dashword | natword | snakeword | brooding-narrative) [<dictation>] [reserved]')
-    extras = [Dictation(name='dictation')]
+    spec = ('[upper | natural] ( phrase | debar | proper | camel | rel-path | abs-path | score | sentence | '
+            'scope-resolve | jumble | dotword | dashword | natword | snakeword | brooding-narrative) [<mixed_dictation>] [reserved]')
+    extras = [Dictation(name='dictation'), mixed_dictation]
 
     local_format_rules = ['phrase', 'spocks']
 
