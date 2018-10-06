@@ -294,7 +294,7 @@ grammarCfg.cmd.map = Item(
         'suspend': Key('c-z'),
 
         'word <text>': Function(handle_word),
-        'number <num>': Text("%(num)d"),
+        '<num>': Text("%(num)d"),
 
         #'change <text> to <text2>': Key("home, slash") + Text("%(text)s") + Key("enter, c, e") + Text("%(text2)s") + Key("escape"),
 
