@@ -73,7 +73,7 @@ class FormatRule(CompoundRule):
             'scope-resolve | jumble | dotword | dashword | natword | snakeword | brooding-narrative) [<mixed_dictation>] [reserved]')
     extras = [Dictation(name='dictation'), mixed_dictation]
 
-    local_format_rules = ['phrase', 'spocks']
+    local_format_rules = ['phrase', 'debar']
 
     def value(self, node):
         words = node.words()
@@ -106,7 +106,7 @@ class FormatRule(CompoundRule):
         else:
             if str(words[0]) == 'phrase':
                 formatted = format_phrase(words)
-            if str(words[0]) == 'spocks':
+            if str(words[0]) == 'debar':
                 formatted = format_with_spaces(words)
 
         # empty formatted causes problems here
