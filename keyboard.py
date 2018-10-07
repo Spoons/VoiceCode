@@ -109,24 +109,24 @@ letterMap = {
     "(foxtrot|fox) ": "f",
     "(golf) ": "g",
     "(hotel|hark) ": "h",
-    "(indigo|ish) ": "i",
+    "(indigo|ice) ": "i",
     "(julia) ": "j",
     "(kilo) ": "k",
     "(lie|line) ": "l",
     "(mike) ": "m",
     "(november|noy) ": "n",
-    "(Oscar|oh) ": "o",
+    "(Oscar|ork) ": "o",
     "(papa|pom) ": "p",
     "(queen) ": "q",
     "(romeo|ree) ": "r",
     "(sierra|soy) ": "s",
     "(tango|tay) ": "t",
-    "(uniform|umm) ": "u",
+    "(uniform|unks) ": "u",
     "(victor|van) ": "v",
     "(whiskey|wes) ": "w",
     "(x-ray|trex) ": "x",
-    "(yankee|yaa) ": "y",
-    "(zulu) ": "z",
+    "(yankee|yang) ": "y",
+    "(zulu|zooch) ": "z",
 }
 
 # generate uppercase versions of every letter
@@ -294,7 +294,7 @@ grammarCfg.cmd.map = Item(
         'suspend': Key('c-z'),
 
         'word <text>': Function(handle_word),
-        'number <num>': Text("%(num)d"),
+        '<num>': Text("%(num)d"),
 
         #'change <text> to <text2>': Key("home, slash") + Text("%(text)s") + Key("enter, c, e") + Text("%(text2)s") + Key("escape"),
 
