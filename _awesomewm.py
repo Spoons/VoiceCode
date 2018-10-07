@@ -11,8 +11,12 @@ class AwesomeRule(MappingRule):
         'awesome kill': Key('ws-c'),
         'focus left [<n>]': Key('w-h:%(n)d/10'),
         'focus right [<n>]': Key('w-l:%(n)d/10'),
-        'focus up [<n>]': Key('w-l:%(n)d/10'),
+        'focus up [<n>]': Key('w-k:%(n)d/10'),
         'focus down [<n>]': Key('w-j:%(n)d/10'),
+        'move left [<n>': Key('sw-h:%(n)d/10'),
+        'move right [<n>': Key('sw-l:%(n)d/10'),
+        'move up [<n>': Key('sw-k:%(n)d/10'),
+        'move down [<n>': Key('sw-j:%(n)d/10'),
 
         'width shrink [<n>]': Key('as-h:%(n)d/5'),
         'width increase [<n>]': Key('as-l:%(n)d/5'),
