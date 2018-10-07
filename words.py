@@ -63,17 +63,17 @@ def format_with_spaces(words):
     string = ' '.join([w.lower() for w in words[1:]])
     return(string)
 
-saved_words = ['sudo', 'num', 'int', 'void']
+saved_words = ['sudo', 'num', 'int', 'void', 'kait']
 saved_words_list = List("saved_words_list", saved_words)
 saved_words_ref = ListRef(None, saved_words_list)
 mixed_dictation = Alternative([Dictation(), saved_words_ref], "mixed_dictation")
 
 class FormatRule(CompoundRule):
-    spec = ('[upper | natural] ( phrase | debar | proper | camel | rel-path | abs-path | score | sentence | '
+    spec = ('[upper | natural] ( phrase | word | proper | camel | rel-path | abs-path | score | sentence | '
             'scope-resolve | jumble | dotword | dashword | natword | snakeword | brooding-narrative) [<mixed_dictation>] [reserved]')
     extras = [Dictation(name='dictation'), mixed_dictation]
 
-    local_format_rules = ['phrase', 'debar']
+    local_format_rules = ['phrase', 'word']
 
     def value(self, node):
         words = node.words()
@@ -104,9 +104,9 @@ class FormatRule(CompoundRule):
             global lastFormatRuleLength
             lastFormatRuleLength = len(formatted)
         else:
-            if str(words[0]) == 'phrase':
+            if str(words[0]) == 'word':
                 formatted = format_phrase(words)
-            if str(words[0]) == 'debar':
+            if str(words[0]) == 'phrase':
                 formatted = format_with_spaces(words)
 
         # empty formatted causes problems here
