@@ -293,7 +293,7 @@ grammarCfg.cmd.map = Item(
         'hexadecimal': Text("0x"),
         'suspend': Key('c-z'),
 
-        'word <text>': Function(handle_word),
+        'reserve <text>': Function(handle_word),
         '<num>': Text("%(num)d"),
 
         #'change <text> to <text2>': Key("home, slash") + Text("%(text)s") + Key("enter, c, e") + Text("%(text2)s") + Key("escape"),

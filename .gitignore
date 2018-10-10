@@ -1,2 +1,4 @@
 *.lnk
 sync.ffs_lock
+*.swp
+*.swo

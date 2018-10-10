@@ -74,6 +74,10 @@ class ProgramsRule(MappingRule):
         'open [new] tab': Key('c-t'),
         'close tab': Key('c-w'),
 
+        'make directory': Text("mkdir "),
+        'change directory': Text("cd "),
+        'list directory': Text("ls "),
+
         # # Xfce-like desktop environment commands
         # '(desk|desktop) left [<n>]': Key('ca-left:%(n)d'),
         # '(desk|desktop) right [<n>]': Key('ca-right:%(n)d'),
