@@ -22,6 +22,7 @@ class AwesomeRule(MappingRule):
         'width increase [<n>]': Key('as-l:%(n)d/5'),
 
         'awesome layout': Key('w-space/5'),
+        'awesome swap [<n>]': Key('w-o:%(n)d/5'),
 
         'desktop <n>': Key('w-%(n)d/10'),
         'set tag <n>': Key('ws-%(n)d/5'),
