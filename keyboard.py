@@ -250,6 +250,7 @@ grammarCfg.cmd.map = Item(
         "triple <char>": Text("%(char)s%(char)s%(char)s"),
         "double escape": Key("escape, escape"),  # Exiting menus.
         'triple tab': Key('tab/3') * 3,
+        'double tab': Key('tab/3') * 2,
         'triple back tab': Key('s-tab/3') * 3,
         # Punctuation and separation characters, for quick editing.
         "colon [<n>]": Key("colon/2:%(n)d"),
