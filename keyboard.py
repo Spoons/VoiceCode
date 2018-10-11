@@ -236,6 +236,7 @@ grammarCfg.cmd.map = Item(
         "release super": Key("win:up"),
         "release [all]": release,
         "press key <pressKey>": Key("%(pressKey)s"),
+
         # Closures.
         "angle brackets": Key("langle, rangle, left/3"),
         "[square] brackets": Key("lbracket, rbracket, left/3"),
@@ -251,15 +252,14 @@ grammarCfg.cmd.map = Item(
         "double escape": Key("escape, escape"),  # Exiting menus.
         'triple tab': Key('tab/3') * 3,
         'triple back tab': Key('s-tab/3') * 3,
+
         # Punctuation and separation characters, for quick editing.
         "colon [<n>]": Key("colon/2:%(n)d"),
         "semi-colon [<n>]": Key("semicolon/2:%(n)d"),
         "comma [<n>]": Key("comma/2:%(n)d"),
-        "(dot|period|dit|point)": Key("dot"),  # cannot be followed by a repeat count
+        "(dot|period|dit|point) [<n>]": Key("dot:%(n)d"),  # cannot be followed by a repeat count
         "(dash|hyphen|minus) [<n>]": Key("hyphen/2:%(n)d"),
         "underscore [<n>]": Key("underscore/2:%(n)d"),
-        "<letters>": Text("%(letters)s"),
-        "<char>": Text("%(char)s"),
 
         'langle [<n>]': Key('langle:%(n)d'),
         'lace [<n>]':   Key('lbrace:%(n)d'),
@@ -293,8 +293,13 @@ grammarCfg.cmd.map = Item(
         'hexadecimal': Text("0x"),
         'suspend': Key('c-z'),
 
+        #Formatting rules
+        #TODO put into seperate rule
         'reserve <text>': Function(handle_word),
         '<num>': Text("%(num)d"),
+        "<letters>": Text("%(letters)s"),
+        "<char>": Text("%(char)s"),
+        "pad <char>": Text(" %(char)s) "),
 
         #'change <text> to <text2>': Key("home, slash") + Text("%(text)s") + Key("enter, c, e") + Text("%(text2)s") + Key("escape"),
 
