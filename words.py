@@ -74,19 +74,20 @@ class CustomDictationRule(MappingRule):
 #        return Text(words)
 
 
-class SymbolFormatRule(MappingRule):
-    mapping = {
-            "pad <symbol>": Text(' %(symbol)s '),
-    }
-
-    extras = [symbolChoice("symbol")]
-
+#class SymbolFormatRule(MappingRule):
+#    mapping = {
+#            "pad <symbol>": Text(' %(symbol)s '),
+#    }
+#
+#    extras = [symbolChoice("symbol")]
+#
 
 local_format = ['word', 'phrase']
+aenea_format = ['proper', 'camel', 'rel-path', 'abs-path', 'score', 'sentence', 
+            'scope-resolve', 'jumble', 'dotword', 'dashword', 'natword', 
+            'snakeword']
 class AeneaFormatRule(CompoundRule):
-    spec = ('[upper | lower] ( proper | camel | rel-path | abs-path | score | sentence | '
-            'scope-resolve | jumble | dotword | dashword | natword | '
-            'snakeword' + ' | '.join(local_format) + ') [<mixed_dictation>]')
+    spec = ('[upper | lower] ( ' + ' | '.join(local_format + aenea_format) + ') [<mixed_dictation>]')
     extras = [Dictation(name='dictation'), mixed_dictation]
 
     def value(self, node):

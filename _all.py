@@ -6,18 +6,16 @@ from aenea import *
 import keyboard
 import words
 import programs
+import awesomewm
 
 release = Key("shift:up, ctrl:up, alt:up, win:up")
 
 alternatives = []
 alternatives.append(RuleRef(rule=keyboard.KeystrokeRule()))
 alternatives.append(RuleRef(rule=words.AeneaFormatRule()))
-#alternatives.append(RuleRef(rule=words.CustomDictationRule()))
-alternatives.append(RuleRef(rule=words.SymbolFormatRule()))
-#alternatives.append(RuleRef(rule=words.CharacterSequenceRule()))
-#alternatives.append(RuleRef(rule=words.ReFormatRule()))
-#alternatives.append(RuleRef(rule=words.NopeFormatRule()))
+alternatives.append(RuleRef(rule=words.CustomDictationRule()))
 alternatives.append(RuleRef(rule=programs.ProgramsRule()))
+alternatives.append(RuleRef(rule=awesomewm.AwesomeRule()))
 
 
 root_action = Alternative(alternatives)
