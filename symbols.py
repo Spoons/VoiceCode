@@ -1,0 +1,30 @@
+from dragonfly import Choice
+	# For repeating of characters.
+def symbolChoice(name="symbol"):
+    return Choice(name, {
+        "(bar|vertical bar|pipe)": "|",
+        "(dash|minus|hyphen)": "-",
+        "(dit|period)": ".",
+        "comma": ",",
+        "backslash": "\\",
+        "underscore": "_",
+        "(star|asterisk)": "*",
+        "colon": ":",
+        "(semicolon|semi-colon)": ";",
+        "at": "@",
+        "[double] quote": '"',
+        "single quote": "'",
+        "hash": "#",
+        "dollar": "$",
+        "percent": "%",
+        "ampersand": "&",
+        "slash": "/",
+        "equal": "=",
+        "plus": "+",
+        "space": " ",
+        "bang": "!",
+        "question": "?",
+        "caret": "^",
+        'backtick': "`",
+        "tilde": "~",
+	})

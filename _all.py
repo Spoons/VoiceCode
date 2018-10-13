@@ -11,7 +11,10 @@ release = Key("shift:up, ctrl:up, alt:up, win:up")
 
 alternatives = []
 alternatives.append(RuleRef(rule=keyboard.KeystrokeRule()))
-alternatives.append(RuleRef(rule=words.FormatRule()))
+alternatives.append(RuleRef(rule=words.AeneaFormatRule()))
+#alternatives.append(RuleRef(rule=words.CustomDictationRule()))
+alternatives.append(RuleRef(rule=words.SymbolFormatRule()))
+#alternatives.append(RuleRef(rule=words.CharacterSequenceRule()))
 #alternatives.append(RuleRef(rule=words.ReFormatRule()))
 #alternatives.append(RuleRef(rule=words.NopeFormatRule()))
 alternatives.append(RuleRef(rule=programs.ProgramsRule()))
