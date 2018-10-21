@@ -296,11 +296,11 @@ grammarCfg.cmd.map = Item(
 
         #Formatting rules
         #TODO put into seperate rule
-        'reserve <text>': Function(handle_word),
+        #'reserve <text>': Function(handle_word),
         '[number] <num>': Text("%(num)d"),
         "<letters>": Text("%(letters)s"),
         "<char>": Text("%(char)s"),
-        "pad <char>": Text(" %(char)s) "),
+        "pad <char>": Text(" %(char)s "),
 
         #'change <text> to <text2>': Key("home, slash") + Text("%(text)s") + Key("enter, c, e") + Text("%(text2)s") + Key("escape"),
 
@@ -309,7 +309,7 @@ grammarCfg.cmd.map = Item(
         # "(delete|remove) (double|extra) (space|whitespace)": Key("c-left/3, backspace, c-right/3"),  # @IgnorePep8
         # "(delete|remove) (double|extra) (type|char|character)": Key("c-left/3, del, c-right/3"),  # @IgnorePep8
         # Microphone sleep/cancel started dictation.
-        "[<text>] (go to sleep|cancel and sleep) [<text2>]": Function(cancel_and_sleep),  # @IgnorePep8
+        #"[<text>] (go to sleep|cancel and sleep) [<text2>]": Function(cancel_and_sleep),  # @IgnorePep8
 
         #"click": Mouse("right"),
     },
