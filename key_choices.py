@@ -215,7 +215,6 @@ pressKeyMap.update(numberMap)
 pressKeyMap.update(controlKeyMap)
 pressKeyMap.update(functionKeyMap)
 
-letters_map = letterMap
 def keyChoice(name="key"):
     return Choice(name, pressKey);
 def letterChoice(name="letter"):

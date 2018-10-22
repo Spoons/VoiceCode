@@ -10,6 +10,8 @@
 #
 # Licensed under LGPL
 
+from key_choices import *
+
 from natlink import setMicState
 from aenea import (
     Grammar,
@@ -55,138 +57,6 @@ def cancel_and_sleep(text=None, text2=None):
     setMicState("sleeping")
 
 
-# For repeating of characters.
-specialCharMap = {
-    "(bar|vertical bar|pipe)": "|",
-    "(dash|minus|hyphen)": "-",
-    "(dit|period)": ".",
-    "comma": ",",
-    "backslash": "\\",
-    "underscore": "_",
-    "(star|asterisk)": "*",
-    "colon": ":",
-    "(semicolon|semi-colon)": ";",
-    "at": "@",
-    "[double] quote": '"',
-    "squote": "'",
-    "hash": "#",
-    "dollar": "$",
-    "percent": "%",
-    "ampersand": "&",
-    "slash": "/",
-    "equal": "=",
-    "plus": "+",
-    "space": " ",
-    "bang": "!",
-    "question": "?",
-    "caret": "^",
-    'backtick': "`",
-    "tilde": "~",
-}
-
-# Modifiers for the press-command.
-modifierMap = {
-    "alt": "a",
-    "control": "c",
-    "shift": "s",
-    "super": "w",
-}
-
-# Modifiers for the press-command, if only the modifier is pressed.
-singleModifierMap = {
-    "alt": "alt",
-    "control": "ctrl",
-    "shift": "shift",
-    "super": "win",
-}
-
-letterMap = {
-    "(alpha|arch)": "a",
-    "(bravo|brav) ": "b",
-    "(charlie|char) ": "c",
-    "(delta|dell) ": "d",
-    "(echo|eck) ": "e",
-    "(foxtrot|fox) ": "f",
-    "(golf) ": "g",
-    "(hotel|hark) ": "h",
-    "(indigo|ice) ": "i",
-    "(julia|jewl) ": "j",
-    "(kilo) ": "k",
-    "(lie|line) ": "l",
-    "(mike) ": "m",
-    "(november|noy) ": "n",
-    "(Oscar|ork) ": "o",
-    "(papa|pom) ": "p",
-    "(queen) ": "q",
-    "(romeo|rosh) ": "r",
-    "(sierra|soy) ": "s",
-    "(tango|tay) ": "t",
-    "(uniform|unks) ": "u",
-    "(victor|van) ": "v",
-    "(whiskey|wes) ": "w",
-    "(x-ray|trex) ": "x",
-    "(yankee|yang) ": "y",
-    "(zulu|zooch) ": "z",
-}
-
-# generate uppercase versions of every letter
-upperLetterMap = {}
-for letter in letterMap:
-    upperLetterMap["(upper|sky) " + letter] = letterMap[letter].upper()
-letterMap.update(upperLetterMap)
-
-numberMap = {
-    "zero": "0",
-    "one": "1",
-    "two": "2",
-    "three": "3",
-    "four": "4",
-    "five": "5",
-    "six": "6",
-    "seven": "7",
-    "eight": "8",
-    "nine": "9",
-}
-
-
-controlKeyMap = {
-    "left": "left",
-    "right": "right",
-    "up": "up",
-    "down": "down",
-    "page up": "pgup",
-    "page down": "pgdown",
-    "home": "home",
-    "end": "end",
-    "space": "space",
-    "(enter|return)": "enter",
-    "escape": "escape",
-    "tab": "tab",
-    "backspace": "backspace"
-}
-
-# F1 to F12. (do these actually work?)
-functionKeyMap = {
-    'F one': 'f1',
-    'F two': 'f2',
-    'F three': 'f3',
-    'F four': 'f4',
-    'F five': 'f5',
-    'F six': 'f6',
-    'F seven': 'f7',
-    'F eight': 'f8',
-    'F nine': 'f9',
-    'F ten': 'f10',
-    'F eleven': 'f11',
-    'F twelve': 'f12',
-}
-
-pressKeyMap = {}
-pressKeyMap.update(letterMap)
-pressKeyMap.update(numberMap)
-pressKeyMap.update(controlKeyMap)
-pressKeyMap.update(functionKeyMap)
-
 
 def handle_word(text):
     words = str(text).split()
@@ -217,7 +87,7 @@ grammarCfg.cmd.map = Item(
         "space": release + Key("space"),
         "space [<n>]": release + Key("space:%(n)d"),
         "(enter|slap|slop) [<n>]": release + Key("enter:%(n)d"),
-        "tab [<n>]": Key("tab:%(n)d"),
+        "tab key [<n>]": Key("tab:%(n)d"),
 
         "delete [this] line": Key("home, s-end, del"),  # @IgnorePep8
         "backspace [<n>]": release + Key("backspace:%(n)d"),
