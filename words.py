@@ -46,34 +46,34 @@ class CustomDictationRule(MappingRule):
 
 local_format = ['words','word', 'phrase']
 aenea_format = ['proper', 'camel', 'rel-path', 'abs-path', 'score', 'sentence', 
-            'scope-resolve', 'jumble', 'dotword', 'dashword', 'natword', 
-            'snakeword']
+        'scope-resolve', 'jumble', 'dotword', 'dashword', 'natword', 
+        'snakeword']
 
 class AeneaFormatRule(CompoundRule):
-    spec = ('[upper | lower] ( ' + ' | '.join(local_format + aenea_format)
-            + ') [<mixed_dictation>]')
-    extras = [Dictation(name='dictation'), mixed_dictation]
+spec = ('[upper | lower] ( ' + ' | '.join(local_format + aenea_format)
+        + ') [<mixed_dictation>]')
+extras = [Dictation(name='dictation'), mixed_dictation]
 
-    def value(self, node):
-        words = node.words()
-        uppercase = words[0] == 'upper'
-        lowercase = words[0] != 'lower'
+def value(self, node):
+    words = node.words()
+    uppercase = words[0] == 'upper'
+    lowercase = words[0] != 'lower'
 
-        if lowercase:
-            words = [word.lower() for word in words]
-        if uppercase:
-            words = [word.upper() for word in words]
+    if lowercase:
+        words = [word.lower() for word in words]
+    if uppercase:
+        words = [word.upper() for word in words]
 
-        words = [word.split('\\', 1)[0].replace('-', '') for word in words]
-        if words[0].lower() in ('upper', 'lower'):
-            del words[0]
+    words = [word.split('\\', 1)[0].replace('-', '') for word in words]
+    if words[0].lower() in ('upper', 'lower'):
+        del words[0]
 
-        if words[0] in local_format:
-            function = LocalFormat.fmap[words[0]]
-        else:
-            function = getattr(aenea.format, 'format_%s' % words[0].lower())
+    if words[0] in local_format:
+        function = LocalFormat.fmap[words[0]]
+    else:
+        function = getattr(aenea.format, 'format_%s' % words[0].lower())
 
-        formatted = function(words[1:])
+    formatted = function(words[1:])
         # empty formatted causes problems here
         print "  ->", formatted
         return Text(formatted)
