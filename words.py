@@ -44,7 +44,7 @@ class CustomDictationRule(MappingRule):
 
 #
 
-local_format = ['word', 'phrase']
+local_format = ['phrase']
 aenea_format = ['proper', 'camel', 'rel-path', 'abs-path', 'score', 'sentence', 
             'scope-resolve', 'jumble', 'dotword', 'dashword', 'natword', 
             'snakeword']
