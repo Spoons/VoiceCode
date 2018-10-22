@@ -77,7 +77,8 @@ if namespace:
             action = wrap_function(function)
             format_functions[spoken_form] = action
 
-custom_dictation = Alternative([saved_word_list, Dictation()])
+saved_word_list_ref = ListRef(None, saved_word_list)
+custom_dictation = Alternative([saved_word_list_ref, Dictation()], name="dictation")
 
 class FormatRule(MappingRule):
     mapping  = format_functions
