@@ -68,7 +68,7 @@ specialCharMap = {
     "(semicolon|semi-colon)": ";",
     "at": "@",
     "[double] quote": '"',
-    "single quote": "'",
+    "squote": "'",
     "hash": "#",
     "dollar": "$",
     "percent": "%",
@@ -300,7 +300,7 @@ grammarCfg.cmd.map = Item(
         '[number] <num>': Text("%(num)d"),
         "<letters>": Text("%(letters)s"),
         "<char>": Text("%(char)s"),
-        "pad <char>": Text(" %(char)s) "),
+        "pad <char>": Text(" %(char)s "),
 
         #'change <text> to <text2>': Key("home, slash") + Text("%(text)s") + Key("enter, c, e") + Text("%(text2)s") + Key("escape"),
 

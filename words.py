@@ -26,15 +26,16 @@ custom_dictation = Alternative([saved_words_ref], "custom_dictation")
 
 class LocalFormat:
     def format_phrase(words):
-        string = ' '.join([w.lower() for w in words[1:]])
+        string = ' '.join([w.lower() for w in words])
         return(string)
 
     def format_with_spaces(words):
         words.append("")
-        string = ' '.join([w.lower() for w in words[1:]])
+        string = ' '.join([w.lower() for w in words])
         return(string)
     fmap = {'phrase': format_phrase,
-            'word': format_with_spaces}
+            'words': format_with_spaces,
+            'word': format_phrase}
 
 class CustomDictationRule(MappingRule):
     mapping = {
@@ -42,52 +43,15 @@ class CustomDictationRule(MappingRule):
             }
     extras = [custom_dictation]
 
-#class RawDictationRule(MappingRule):
-#
-#class CharacterRule(MappingRule):
-#    mapping = {
-#            "<letter>": Key("%(letter)s"),
-#            }
-#    extras = [
-#            letterChoice("letter"),
-#            ]
-#
 
-#class LetterRule(MappingRule):
-#    mapping = {
-#        "<letter>": Key("%(letter)s"),
-#    }
-#    extras = [
-#        letterChoice("letter"),
-#    ]
-#
-#letter_sequence = Repetition(
-#    Alternative([RuleRef(rule = LetterRule())]),
-#    min = 1, max = 10, name = "letter_sequence")
-#
-#class CharacterSequenceRule(CompoundRule):
-#    spec = '<letter_sequence>'
-#    extras = [letter_sequence]
-#    
-#    def value(self, node):
-#        words = node.words()
-#        return Text(words)
-
-
-#class SymbolFormatRule(MappingRule):
-#    mapping = {
-#            "pad <symbol>": Text(' %(symbol)s '),
-#    }
-#
-#    extras = [symbolChoice("symbol")]
-#
-
-local_format = ['word', 'phrase']
+local_format = ['words','word', 'phrase']
 aenea_format = ['proper', 'camel', 'rel-path', 'abs-path', 'score', 'sentence', 
             'scope-resolve', 'jumble', 'dotword', 'dashword', 'natword', 
             'snakeword']
+
 class AeneaFormatRule(CompoundRule):
-    spec = ('[upper | lower] ( ' + ' | '.join(local_format + aenea_format) + ') [<mixed_dictation>]')
+    spec = ('[upper | lower] ( ' + ' | '.join(local_format + aenea_format)
+            + ') [<mixed_dictation>]')
     extras = [Dictation(name='dictation'), mixed_dictation]
 
     def value(self, node):
@@ -109,8 +73,7 @@ class AeneaFormatRule(CompoundRule):
         else:
             function = getattr(aenea.format, 'format_%s' % words[0].lower())
 
-        formatted = function(words)
-
+        formatted = function(words[1:])
         # empty formatted causes problems here
         print "  ->", formatted
         return Text(formatted)
