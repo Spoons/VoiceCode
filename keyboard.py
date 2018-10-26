@@ -10,7 +10,7 @@
 #
 # Licensed under LGPL
 
-from key_choices import *
+from maps import *
 
 from natlink import setMicState
 from aenea import (

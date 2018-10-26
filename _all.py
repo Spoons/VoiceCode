@@ -19,25 +19,34 @@ alternatives.append(RuleRef(rule=awesomewm.AwesomeRule()))
 
 
 root_action = Alternative(alternatives, name="root_action")
-sequence = Repetition(root_action, min=1, max=16, name="sequence")
+sequence = Repetition(root_action, min=1, max=5, name="sequence")
+
+FormatRuleRef = RuleRef(rule=words.FormatRule())
+dictation = Repetition(FormatRuleRef, min=1, max=5, name="dictation")
 
 class RepeatRule(CompoundRule):
     # Here we define this rule's spoken-form and special elements.
-    spec = "<sequence> [<n> times]"
+    spec = "[<sequence>] [<dictation>] [<n> times] "
     extras = [
         sequence,  # Sequence of actions defined above.
+        dictation,
         IntegerRef("n", 1, 100),  # Times to repeat the sequence.
     ]
     defaults = {
         "n": 1,  # Default repeat count.
+        "sequence": [],
+        "dictation": []
     }
 
     def _process_recognition(self, node, extras):  # @UnusedVariable
         sequence = extras["sequence"]  # A sequence of actions.
         count = extras["n"]  # An integer repeat count.
+        dictation = extras["dictation"]
         for i in range(count):  # @UnusedVariable
             for action in sequence:
                 action.execute()
+            for action in dictation:
+                action.execute();
             release.execute()
 
 grammar = Grammar("root rule")

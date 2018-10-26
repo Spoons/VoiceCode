@@ -1,4 +1,4 @@
-from dragonfly import (
+from aenea import (
     ActionBase,
     Alternative,
     AppContext,
@@ -24,7 +24,6 @@ from dragonfly import (
     Repeat,
     Repetition,
     RuleRef,
-    RuleWrap,
     Text,
 )
 
@@ -42,7 +41,7 @@ saved_words = []
 
 import os 
 
-word_path = "C:\\Natlink\\Natlink\\Macrosystem\\word_list.txt"
+word_path = "C:\\Natlink\\Natlink\\Macrosystem\\words_list.txt"
 try:
     with open(word_path, 'r') as file:
         for line in file:
@@ -52,8 +51,6 @@ try:
 except Exception as e:
     print("Unable to open: " + word_path)
     print(e)
-
-saved_word_list = List("saved_word_list", saved_words)
 
 # Here we prepare the action map of formatting functions from the config file.
 # Retrieve text-formatting functions from this module's config file. Each of
@@ -77,13 +74,15 @@ if namespace:
             action = wrap_function(function)
             format_functions[spoken_form] = action
 
+
+saved_word_list = List("saved_word_list", saved_words)
 saved_word_list_ref = ListRef(None, saved_word_list)
 custom_dictation = Alternative([saved_word_list_ref, Dictation()], name="dictation")
 
 class FormatRule(MappingRule):
     mapping  = format_functions
-    extras   = [Dictation("dictation")]
+    extras   = [Dictation(name="dictation")]
 
-grammar = Grammar("hey buddy")
-grammar.add_rule(FormatRule())
-grammar.load()
+# grammar = Grammar("hey buddy")
+# grammar.add_rule(FormatRule())
+# grammar.load()

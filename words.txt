@@ -92,12 +92,10 @@ def format_dashes(dictation):
 
 # Format: some words
 def format_spaces(dictation):
-    """ spaces <dictation> """
+    """ (spaces|phrase) <dictation> """
     return " ".join(text.split_dictation(dictation))
 
 # Format:  some words 
 def format_padded(dictation):
     """ padded <dictation> """
     return " " + " ".join(text.split_dictation(dictation)) + " "
-
-
