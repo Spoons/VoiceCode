@@ -298,6 +298,7 @@ grammarCfg.cmd.map = Item(
         #TODO put into seperate rule
         'reserve <text>': Function(handle_word),
         'number <num>': Text("%(num)d"),
+        '<num> <char>': Text("%(num)d%(char)s"),
         "<letters>": Text("%(letters)s"),
         "<char>": Text("%(char)s"),
         "pad <char>": Text(" %(char)s "),

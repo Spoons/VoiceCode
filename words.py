@@ -17,7 +17,7 @@ from aenea import *
 from symbols import symbolChoice
 from letters import letterChoice
 
-saved_words = ['sudo', 'num', 'int', 'void', 'kait']
+saved_words = ['var', 'console', 'vim', 'sudo', 'num', 'int', 'void', 'kait']
 saved_words_list = List("saved_words_list", saved_words)
 saved_words_ref = ListRef(None, saved_words_list)
 
@@ -70,7 +70,7 @@ class AeneaFormatRule(CompoundRule):
         else:
             function = getattr(aenea.format, 'format_%s' % words[0].lower())
 
-        formatted = function(words)
+        formatted = function(words[1:])
 
         # empty formatted causes problems here
         print "  ->", formatted
