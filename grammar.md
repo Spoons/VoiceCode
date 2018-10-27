@@ -1,4 +1,4 @@
-#Formatting functions
+# Formatting functions
 
 
 score <dictation>
