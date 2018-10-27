@@ -1,1 +1,7 @@
 int
+void
+vim
+kait
+def
+var
+
