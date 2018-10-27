@@ -42,33 +42,33 @@ def format_namespace(dictation):
     return "_".join(text.split_dictation(dictation)) + "::"
 
 # Format: SomeWords
-def format_studley(dictation):
+def format_proper(dictation):
     """ proper <dictation> """
     words = [word.capitalize() for words in text.split_dictation(dictation)
              for word in re.findall(r"(\W+|\w+)", words)]
     return "".join(words)
 
 # Format: kSomeWords
-def format_k_studley(dictation):
-    """ K studley <dictation> """
+def format_k_proper(dictation):
+    """ K proper <dictation> """
     words = [word.capitalize() for words in text.split_dictation(dictation)
              for word in re.findall(r"(\W+|\w+)", words)]
     return "k" + "".join(words)
 
 # Format: QSomeWords
-def format_q_studley(dictation):
-    """ Q studley <dictation> """
+def format_q_proper(dictation):
+    """ Q proper <dictation> """
     words = [word.capitalize() for words in text.split_dictation(dictation)
              for word in re.findall(r"(\W+|\w+)", words)]
     return "Q" + "".join(words)
 
 # Format: somewords
-def format_compound(dictation):
+def format_jumble(dictation):
     """ [all] jumble <dictation> """
     return "".join(text.split_dictation(dictation))
 
 # Format: SOMEWORDS
-def format_upper_compound(dictation):
+def format_upper_jumble(dictation):
     """ upper jumple <dictation> """
     words = [word.upper() for word in text.split_dictation(dictation)]
     return "".join(words)
@@ -91,9 +91,35 @@ def format_dashes(dictation):
     return "-".join(text.split_dictation(dictation))
 
 # Format: some words
-def format_spaces(dictation):
-    """ (spaces|phrase) <dictation> """
+def format_phrase(dictation):
+    """ phrase <dictation> """
     return " ".join(text.split_dictation(dictation))
+
+def format_pre_phrase(dictation):
+    """ pre phrase <dictation> """
+    return " " + " ".join(text.split_dictation(dictation))
+
+def format_trail_phrase(dictation):
+    """ trail phrase <dictation> """
+    return " ".join(text.split_dictation(dictation)) + " "
+
+def format_sentence(dictation):
+    """ (sentence) <dictation> """
+    words = text.split_dictation(dictation)
+    words[0] = words[0].capitalize();
+    return " ".join(words)
+
+def format_trail_sentence(dictation):
+    """ trail (sentence) <dictation> """
+    words = text.split_dictation(dictation)
+    words[0] = words[0].capitalize();
+    return " ".join(words) + " "
+
+def format_pre_sentence(dictation):
+    """ pre (sentence) <dictation> """
+    words = text.split_dictation(dictation)
+    words[0] = words[0].capitalize();
+    return " " + " ".join(words)
 
 # Format:  some words 
 def format_padded(dictation):

@@ -10,43 +10,48 @@ import awesomewm
 
 release = Key("shift:up, ctrl:up, alt:up, win:up")
 
-alternatives = []
-alternatives.append(RuleRef(rule=keyboard.KeystrokeRule()))
-# alternatives.append(RuleRef(rule=words.AeneaFormatRule()))
-# alternatives.append(RuleRef(rule=words.CustomDictationRule()))
-alternatives.append(RuleRef(rule=programs.ProgramsRule()))
-alternatives.append(RuleRef(rule=awesomewm.AwesomeRule()))
+
+repeated_commands = []
+repeated_commands.append(RuleRef(rule=keyboard.KeystrokeRule()))
+repeated_commands.append(RuleRef(rule=programs.ProgramsRule()))
+repeated_commands.append(RuleRef(rule=awesomewm.AwesomeRule()))
 
 
-root_action = Alternative(alternatives, name="root_action")
-sequence = Repetition(root_action, min=1, max=5, name="sequence")
+commands = Alternative(repeated_commands, name="commands")
+sequence = Repetition(commands, min=1, max=7, name="sequence")
 
-FormatRuleRef = RuleRef(rule=words.FormatRule())
-dictation = Repetition(FormatRuleRef, min=1, max=5, name="dictation")
+dictation = RuleRef(name="single_dictation", rule=words.FormatRule())
+dictation_sequence = Repetition(dictation, min=1, max=5, name="dictation")
 
 class RepeatRule(CompoundRule):
     # Here we define this rule's spoken-form and special elements.
-    spec = "[<sequence>] [<dictation>] [<n> times] "
+    spec = "[<sequence>] [<dictation>] [terminal <single_dictation>] [<n> times] "
     extras = [
         sequence,  # Sequence of actions defined above.
         dictation,
+        dictation_sequence,
         IntegerRef("n", 1, 100),  # Times to repeat the sequence.
     ]
     defaults = {
         "n": 1,  # Default repeat count.
+        "dictation_sequence": [],
+        "single_dictation": [],
         "sequence": [],
         "dictation": []
     }
 
     def _process_recognition(self, node, extras):  # @UnusedVariable
         sequence = extras["sequence"]  # A sequence of actions.
-        count = extras["n"]  # An integer repeat count.
         dictation = extras["dictation"]
+        single_dictation = extras["single_dictation"]
+        count = extras["n"]  # An integer repeat count.
         for i in range(count):  # @UnusedVariable
             for action in sequence:
                 action.execute()
             for action in dictation:
                 action.execute();
+            if single_dictation:
+                single_dictation.execute();
             release.execute()
 
 grammar = Grammar("root rule")
