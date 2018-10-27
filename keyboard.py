@@ -87,7 +87,7 @@ grammarCfg.cmd.map = Item(
         "space": release + Key("space"),
         "space [<n>]": release + Key("space:%(n)d"),
         "(enter|slap|slop) [<n>]": release + Key("enter:%(n)d"),
-        "tab key [<n>]": Key("tab:%(n)d"),
+        "tab [<n>]": Key("tab:%(n)d"),
 
         "delete [this] line": Key("home, s-end, del"),  # @IgnorePep8
         "backspace [<n>]": release + Key("backspace:%(n)d"),
@@ -131,6 +131,7 @@ grammarCfg.cmd.map = Item(
         "(dot|period|dit|point) [<n>]": Key("dot:%(n)d"),  # cannot be followed by a repeat count
         "(dash|hyphen|minus) [<n>]": Key("hyphen/2:%(n)d"),
         "underscore [<n>]": Key("underscore/2:%(n)d"),
+        
 
         'langle [<n>]': Key('langle:%(n)d'),
         'lace [<n>]':   Key('lbrace:%(n)d'),
