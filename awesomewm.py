@@ -4,32 +4,32 @@ from aenea import *
 class AwesomeRule(MappingRule):
     exported = True
     mapping = {
-        'awesome run': Key('w-r/10'),
-        'awesome restart': Key('ws-r'),
-        'awesome menu': Key('w-w'),
-        'awesome maximize': Key('w-m'),
-        'awesome kill': Key('ws-c'),
-        'focus left [<n>]': Key('w-h:%(n)d/10'),
-        'focus right [<n>]': Key('w-l:%(n)d/10'),
-        'focus up [<n>]': Key('w-k:%(n)d/10'),
-        'focus down [<n>]': Key('w-j:%(n)d/10'),
-        'increase master [<n>]': Key('sw-h:%(n)d/10'),
-        'decrease master [<n>]': Key('sw-l:%(n)d/10'),
-        'move previous [<n>]': Key('sw-k:%(n)d/10'),
-        'move next [<n>]': Key('sw-j:%(n)d/10'),
+        'awesome run': Key('a-r/10'),
+        'awesome restart': Key('as-r'),
+        'awesome menu': Key('a-w'),
+        'awesome maximize': Key('a-m'),
+        'awesome kill': Key('as-c'),
+        'focus left [<n>]': Key('a-h:%(n)d/10'),
+        'focus right [<n>]': Key('a-l:%(n)d/10'),
+        'focus up [<n>]': Key('a-k:%(n)d/10'),
+        'focus down [<n>]': Key('a-j:%(n)d/10'),
+        'increase master [<n>]': Key('sa-h:%(n)d/10'),
+        'decrease master [<n>]': Key('sa-l:%(n)d/10'),
+        'move previous [<n>]': Key('sa-k:%(n)d/10'),
+        'move next [<n>]': Key('sa-j:%(n)d/10'),
 
         'width shrink [<n>]': Key('as-h:%(n)d/5'),
         'width increase [<n>]': Key('as-l:%(n)d/5'),
 
-        'awesome layout': Key('w-space/5'),
-        'awesome swap [<n>]': Key('w-o:%(n)d/5'),
+        'awesome layout': Key('a-space/5'),
+        'awesome swap [<n>]': Key('a-o:%(n)d/5'),
 
-        'desktop <n>': Key('w-%(n)d/10'),
-        'set tag <n>': Key('ws-%(n)d/5'),
+        'desktop <n>': Key('a-%(n)d/10'),
+        'set tag <n>': Key('as-%(n)d/5'),
 
-        'open firefox': Key('w-r/10') + Text("firefox") + Key('enter/10'),
-        'open workrave': Key('w-r/10') + Text("workrave") + Key('enter/10'),
-        'open terminal': Key('w-enter'),
+        'open firefox': Key('a-r/10') + Text("firefox") + Key('enter/10'),
+        'open workrave': Key('a-r/10') + Text("workrave") + Key('enter/10'),
+        'open terminal': Key('a-enter'),
 
 
     }
