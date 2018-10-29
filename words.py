@@ -1,77 +1,84 @@
-# module for dictating words and basic sentences
-#
-# (based on the multiedit module from dragonfly-modules project)
-# (heavily modified)
-# (the original copyright notice is reproduced below)
-#
-# (c) Copyright 2008 by Christo Butcher
-# Licensed under the LGPL, see <http://www.gnu.org/licenses/>
+from aenea import (
+    ActionBase,
+    Alternative,
+    AppContext,
+    Choice,
+    Compound,
+    CompoundRule,
+    Config,
+    DictList,
+    DictListRef,
+    Dictation,
+    Empty,
+    Function,
+    Grammar,
+    IntegerRef,
+    Key,
+    List,
+    ListRef,
+    MappingRule,
+    Mimic,
+    Mouse,
+    Optional,
+    Pause,
+    Repeat,
+    Repetition,
+    RuleRef,
+    Text,
+)
 
-import aenea
-import aenea.misc
-import aenea.vocabulary
-import aenea.configuration
-import aenea.format
+from maps import *
+# Make sure dragonfly errors show up in NatLink messages.
+# dragonfly.log.setup_log()
 
-from aenea import *
-from symbols import symbolChoice
-from letters import letterChoice
+# Load _repeat.txt.
+config = Config("words")
+namespace = config.load()
 
-saved_words = ['var', 'console', 'vim', 'sudo', 'num', 'int', 'void', 'kait']
-saved_words_list = List("saved_words_list", saved_words)
-saved_words_ref = ListRef(None, saved_words_list)
+# Load commonly misrecognized words saved to a file.
+# TODO: Revisit.
+saved_words = []
 
-mixed_dictation = Alternative([Dictation(), saved_words_ref], "mixed_dictation")
-custom_dictation = Alternative([saved_words_ref], "custom_dictation")
+import os 
 
-class LocalFormat:
-    def format_phrase(words):
-        string = ' '.join([w.lower() for w in words])
-        return(string)
+word_path = "C:\\Natlink\\Natlink\\Macrosystem\\words_list.txt"
+try:
+    with open(word_path, 'r') as file:
+        for line in file:
+            word = line.strip()
+            if len(word) > 2 and word not in letters_map:
+                saved_words.append(line.strip())
+except Exception as e:
+    print("Unable to open: " + word_path)
+    print(e)
 
-    def format_with_spaces(words):
-        words.append("")
-        string = ' '.join([w.lower() for w in words])
-        return(string)
-    fmap = {'word': format_phrase,
-            'phrase': format_with_spaces}
+# Here we prepare the action map of formatting functions from the config file.
+# Retrieve text-formatting functions from this module's config file. Each of
+# these functions must have a name that starts with "format_".
+format_functions = {}
+if namespace:
+    print "loading namespace"
+    for name, function in namespace.items():
+        if name.startswith("format_") and callable(function):
+            spoken_form = function.__doc__.strip()
 
-class CustomDictationRule(MappingRule):
-    mapping = {
-            "my phrase <custom_dictation>": Text('%(custom_dictation)s'),
-            }
-    extras = [custom_dictation]
+            # We wrap generation of the Function action in a function so
+            #  that its *function* variable will be local.  Otherwise it
+            #  would change during the next iteration of the namespace loop.
+            def wrap_function(function):
+                def _function(dictation):
+                    formatted_text = function(dictation)
+                    Text(formatted_text).execute()
+                return Function(_function)
+
+            action = wrap_function(function)
+            format_functions[spoken_form] = action
 
 
-local_format = ['word', 'phrase']
-aenea_format = ['proper', 'camel', 'rel-path', 'abs-path', 'score', 'sentence', 
-            'scope-resolve', 'jumble', 'dotword', 'dashword', 'natword', 
-            'snakeword']
-class AeneaFormatRule(CompoundRule):
-    spec = ('[upper | lower] ( ' + ' | '.join(local_format + aenea_format) + ') [<mixed_dictation>]')
-    extras = [Dictation(name='dictation'), mixed_dictation]
+saved_word_list = List("saved_word_list", saved_words)
+saved_word_list_ref = ListRef(None, saved_word_list)
+custom_dictation = Alternative([saved_word_list_ref, Dictation()], name="dictation")
 
-    def value(self, node):
-        words = node.words()
-        uppercase = words[0] == 'upper'
-        lowercase = words[0] != 'lower'
-
-        if lowercase:
-            words = [word.lower() for word in words]
-        if uppercase:
-            words = [word.upper() for word in words]
-
-        words = [word.split('\\', 1)[0].replace('-', '') for word in words]
-        if words[0].lower() in ('upper', 'lower'):
-            del words[0]
-
-        if words[0] in local_format:
-            function = LocalFormat.fmap[words[0]]
-        else:
-            function = getattr(aenea.format, 'format_%s' % words[0].lower())
-
-        formatted = function(words[1:])
-
-        # empty formatted causes problems here
-        print "  ->", formatted
-        return Text(formatted)
+class FormatRule(MappingRule):
+    mapping  = format_functions
+    extras   = [Dictation(name="dictation")]

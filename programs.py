@@ -28,21 +28,6 @@ for command in gitcommand_array:
 
 class ProgramsRule(MappingRule):
     mapping = {
-        "vim save": Key("escape, colon, w, enter"),
-        "vim quit": Key("escape, colon, q, enter"),
-        "vim really quit": Key("escape, colon, q, exclamation, enter"),
-        "vim save and quit": Key("escape, colon, w, q, enter"),
-        "vim split": Text(":sp "),
-        "vim vertical split": Text(":vs "),
-        "vim tab new": Text(":tabnew "),
-        "vim tab close": Text(":tabclose\n"),
-
-        "vim open source": Text(":vs %<.c\n"),
-        "vim open source plus": Text(":vs %<.cpp\n"),
-        "vim open header": Text(":vs %<.h\n") + Key('c-w, c-w'),
-        "vim (switch|toggle|swap)": Key('c-w, c-w'),
-        "vim rotate": Key('c-w, r'),
-        "vim try that": Key('escape, colon, w, enter, a-tab/5, up, enter'),
 
         'screen': Key('c-a'),
         'screen switch': Key('c-a, c-a'),
