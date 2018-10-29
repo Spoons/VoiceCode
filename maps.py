@@ -139,7 +139,7 @@ letterMap = {
         "(Oscar|ork) ": "o",
         "(papa|pooch) ": "p",
         "(queen) ": "q",
-        "(romeo|rosh) ": "r",
+        "(romeo|roy) ": "r",
         "(sierra|soy) ": "s",
         "(tango|tay) ": "t",
         "(uniform|unks) ": "u",

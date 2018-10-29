@@ -92,8 +92,13 @@ def format_dashes(dictation):
 
 # Format: some words
 def format_phrase(dictation):
-    """ phrase <dictation> """
+    """ (phrase|word) <dictation> """
     return " ".join(text.split_dictation(dictation))
+
+def format_upper_phrase(dictation):
+    """ upper phrase <dictation> """
+    words = text.split_dictation(dictation)
+    return " ".join(w.upper() for w in words)
 
 def format_pre_phrase(dictation):
     """ pre phrase <dictation> """
