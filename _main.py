@@ -18,8 +18,8 @@ repeated_commands.append(RuleRef(rule=awesomewm.AwesomeRule()))
 
 
 commands = Alternative(repeated_commands, name="commands")
-sequence = Repetition(commands, min=1, max=7, name="sequence")
-sequence2 = Repetition(commands, min=1, max=7, name="sequence2")
+sequence = Repetition(commands, min=1, max=5, name="sequence")
+sequence2 = Repetition(commands, min=1, max=5, name="sequence2")
 
 dictation = RuleRef(name="single_dictation", rule=words.FormatRule())
 dictation_sequence = Repetition(dictation, min=1, max=5, name="dictation")
@@ -28,7 +28,10 @@ dictation_sequence = Repetition(dictation, min=1, max=5, name="dictation")
 
 class RepeatRule(CompoundRule):
     # Here we define this rule's spoken-form and special elements.
-    spec = "[<sequence>] [<dictation>] [<sequence2>] [terminal <single_dictation>] [<n> times] "
+    spec = ("[<sequence>] "
+    "([<dictation>] [terminal <single_dictation>]) "
+    "[<sequence2>] "
+    "[<n> times] ")
     extras = [
         sequence,  # Sequence of actions defined above.
         sequence2,  # Sequence of actions defined above.

@@ -81,4 +81,4 @@ custom_dictation = Alternative([saved_word_list_ref, Dictation()], name="dictati
 
 class FormatRule(MappingRule):
     mapping  = format_functions
-    extras   = [Dictation(name="dictation")]
+    extras   = [custom_dictation]
