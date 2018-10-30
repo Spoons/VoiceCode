@@ -11,58 +11,47 @@ import awesomewm
 release = Key("shift:up, ctrl:up, alt:up, win:up")
 
 
-repeated_commands = []
-repeated_commands.append(RuleRef(rule=keyboard.KeystrokeRule()))
-repeated_commands.append(RuleRef(rule=programs.ProgramsRule()))
-repeated_commands.append(RuleRef(rule=awesomewm.AwesomeRule()))
 
 
-commands = Alternative(repeated_commands, name="commands")
-sequence = Repetition(commands, min=1, max=5, name="sequence")
-sequence2 = Repetition(commands, min=1, max=5, name="sequence2")
+dictation = RuleRef(name="dictation", rule=words.FormatRule())
+# dictation_sequence = Repetition(dictation, min=1, max=5, name="dictation")
 
-dictation = RuleRef(name="single_dictation", rule=words.FormatRule())
-dictation_sequence = Repetition(dictation, min=1, max=5, name="dictation")
+command_list = []
+command_list.append(RuleRef(rule=keyboard.KeystrokeRule()))
+command_list.append(RuleRef(rule=programs.ProgramsRule()))
+command_list.append(RuleRef(rule=awesomewm.AwesomeRule()))
+commands = Alternative(command_list, name="commands")
+
+sequence = Repetition(commands, min=1, max=7, name="sequence")
+# sequence2 = Repetition(commands, min=1, max=5, name="sequence2")
 
 
 
 class RepeatRule(CompoundRule):
     # Here we define this rule's spoken-form and special elements.
     spec = ("[<sequence>] "
-    "([<dictation>] [terminal <single_dictation>]) "
-    "[<sequence2>] "
+    "[terminal <dictation>] "
     "[<n> times] ")
     extras = [
         sequence,  # Sequence of actions defined above.
-        sequence2,  # Sequence of actions defined above.
         dictation,
-        dictation_sequence,
         IntegerRef("n", 1, 100),  # Times to repeat the sequence.
     ]
     defaults = {
         "n": 1,  # Default repeat count.
-        "dictation_sequence": [],
-        "single_dictation": [],
+        "dictation": [],
         "sequence": [],
-        "sequence2": [],
-        "dictation": []
     }
 
     def _process_recognition(self, node, extras):  # @UnusedVariable
         sequence = extras["sequence"]  # A sequence of actions.
-        sequence2 = extras["sequence2"]  # A sequence of actions.
         dictation = extras["dictation"]
-        single_dictation = extras["single_dictation"]
         count = extras["n"]  # An integer repeat count.
         for i in range(count):  # @UnusedVariable
             for action in sequence:
                 action.execute()
-            for action in dictation:
-                action.execute();
-            for action in sequence2:
-                action.execute()
-            if single_dictation:
-                single_dictation.execute();
+            if dictation:
+                dictation.execute();
             release.execute()
 
 grammar = Grammar("root rule")

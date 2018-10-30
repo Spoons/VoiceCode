@@ -121,6 +121,35 @@ singleModifierMap = {
         "super": "win",
         }
 
+shortletterMap = {
+        "(arch)": "a",
+        "(brav) ": "b",
+        "(char) ": "c",
+        "(dell) ": "d",
+        "(etch) ": "e",
+        "(fox) ": "f",
+        "(golf) ": "g",
+        "(hark) ": "h",
+        "(ice) ": "i",
+        "(jinks) ": "j",
+        "(kilo) ": "k",
+        "(line) ": "l",
+        "(mike) ": "m",
+        "(nerb) ": "n",
+        "(ork) ": "o",
+        "(pooch) ": "p",
+        "(queen) ": "q",
+        "(roy) ": "r",
+        "(soy) ": "s",
+        "(tay) ": "t",
+        "(unks) ": "u",
+        "(van) ": "v",
+        "(wes) ": "w",
+        "(trex) ": "x",
+        "(yang) ": "y",
+        "(zooch) ": "z",
+        }
+
 letterMap = {
         "(alpha|arch)": "a",
         "(bravo|brav) ": "b",
