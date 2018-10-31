@@ -80,5 +80,6 @@ saved_word_list_ref = ListRef(None, saved_word_list)
 custom_dictation = Alternative([saved_word_list_ref, Dictation()], name="dictation")
 
 class FormatRule(MappingRule):
+    exported = False
     mapping  = format_functions
     extras   = [custom_dictation]

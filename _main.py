@@ -20,6 +20,7 @@ command_list = []
 command_list.append(RuleRef(rule=keyboard.KeystrokeRule()))
 command_list.append(RuleRef(rule=programs.ProgramsRule()))
 command_list.append(RuleRef(rule=awesomewm.AwesomeRule()))
+command_list.append(dictation)
 commands = Alternative(command_list, name="commands")
 
 sequence = Repetition(commands, min=1, max=7, name="sequence")
