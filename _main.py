@@ -24,7 +24,6 @@ command_list.append(dictation)
 commands = Alternative(command_list, name="commands")
 
 sequence = Repetition(commands, min=1, max=7, name="sequence")
-# sequence2 = Repetition(commands, min=1, max=5, name="sequence2")
 
 
 

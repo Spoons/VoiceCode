@@ -10,7 +10,7 @@
 #
 # Licensed under LGPL
 
-from maps import *
+from common import *
 
 from natlink import setMicState
 from aenea import (
@@ -105,7 +105,7 @@ grammarCfg.cmd.map = Item(
         "[(hold|press)] super": Key("win:down/3"),
         "release super": Key("win:up"),
         "release [all]": release,
-        "press key <pressKey>": Key("%(pressKey)s"),
+        # "press key <pressKey>": Key("%(pressKey)s"),
 
         # Closures.
         "angle brackets": Key("langle, rangle, left/3"),
@@ -198,12 +198,12 @@ class KeystrokeRule(MappingRule):
         IntegerRef("num", 0, 1000),
         Dictation("text"),
         Dictation("text2"),
-        Choice("char", specialCharMap),
-        Choice("letters", letterMap),
-        Choice("modifier1", modifierMap),
-        Choice("modifier2", modifierMap),
-        Choice("modifierSingle", singleModifierMap),
-        Choice("pressKey", pressKeyMap),
+        RuleRef(rule=Symbol(), name="char"),
+        RuleRef(rule=Letters(), name = "letters"),
+        RuleRef(rule=Modifiers(), name="modifier1"),
+        RuleRef(rule=Modifiers(), name="modifier2"),
+        RuleRef(rule=SingleModifiers(), name="modifierSingle"),
+        # RuleRef(rule=AllCharacters(), name="pressKey"),
     ]
     defaults = {
         "n": 1,

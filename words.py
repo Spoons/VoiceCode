@@ -27,7 +27,7 @@ from aenea import (
     Text,
 )
 
-from maps import *
+from common import *
 # Make sure dragonfly errors show up in NatLink messages.
 # dragonfly.log.setup_log()
 
@@ -46,7 +46,7 @@ try:
     with open(word_path, 'r') as file:
         for line in file:
             word = line.strip()
-            if len(word) > 2 and word not in letters_map:
+            if len(word) > 2:# and word not in Letters().returnMap():
                 saved_words.append(line.strip())
 except Exception as e:
     print("Unable to open: " + word_path)

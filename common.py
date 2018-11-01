@@ -1,32 +1,34 @@
+from aenea import *
 
-# For repeating of characters.
-specialCharMap = {
-        "(bar|vertical bar|pipe)": "|",
-        "(dash|minus|hyphen)": "-",
-        "(dit|period)": ".",
-        "comma": ",",
-        "backslash": "\\",
-        "underscore": "_",
-        "(star|asterisk)": "*",
-        "colon": ":",
-        "(semicolon|semi-colon)": ";",
-        "at": "@",
-        "[double] quote": '"',
-        "squote": "'",
-        "hash": "#",
-        "dollar": "$",
-        "percent": "%",
-        "ampersand": "&",
-        "slash": "/",
-        "equal": "=",
-        "plus": "+",
-        "space": " ",
-        "bang": "!",
-        "question": "?",
-        "caret": "^",
-        'backtick': "`",
-        "tilde": "~",
-        }
+class Symbol(MappingRule):
+    exported = False
+    mapping = {
+            "(bar|vertical bar|pipe)": "|",
+            "(dash|minus|hyphen)": "-",
+            "(dit|period)": ".",
+            "comma": ",",
+            "backslash": "\\",
+            "underscore": "_",
+            "(star|asterisk)": "*",
+            "colon": ":",
+            "(semicolon|semi-colon)": ";",
+            "at": "@",
+            "[double] quote": '"',
+            "squote": "'",
+            "hash": "#",
+            "dollar": "$",
+            "percent": "%",
+            "ampersand": "&",
+            "slash": "/",
+            "equal": "=",
+            "plus": "+",
+            "space": " ",
+            "bang": "!",
+            "question": "?",
+            "caret": "^",
+            'backtick': "`",
+            "tilde": "~",
+            }
 
 compound_symbols = {
         "plus": "+",
@@ -106,22 +108,28 @@ compound_symbols = {
 }
 
 # Modifiers for the press-command.
-modifierMap = {
+class Modifiers(MappingRule):
+    exported = False
+    mapping = {
         "alt": "a",
         "control": "c",
         "shift": "s",
         "super": "w",
-        }
+    }
 
 # Modifiers for the press-command, if only the modifier is pressed.
-singleModifierMap = {
+class SingleModifiers(MappingRule):
+    exported = False
+    mapping = {
         "alt": "alt",
         "control": "ctrl",
         "shift": "shift",
         "super": "win",
-        }
+    }
 
-shortletterMap = {
+class Letters(MappingRule):
+    exported = False
+    mapping = {
         "(arch)": "a",
         "(brav) ": "b",
         "(char) ": "c",
@@ -148,44 +156,41 @@ shortletterMap = {
         "(trex) ": "x",
         "(yang) ": "y",
         "(zooch) ": "z",
-        }
-
-letterMap = {
-        "(alpha|arch)": "a",
-        "(bravo|brav) ": "b",
-        "(charlie|char) ": "c",
-        "(delta|dell) ": "d",
-        "(echo|etch) ": "e",
-        "(fox) ": "f",
-        "(golf) ": "g",
-        "(hotel|hark) ": "h",
-        "(indigo|ice) ": "i",
-        "(julia|jinks) ": "j",
-        "(kilo) ": "k",
-        "(lie|line) ": "l",
-        "(mike) ": "m",
-        "(november|nerb) ": "n",
-        "(Oscar|ork) ": "o",
-        "(papa|pooch) ": "p",
-        "(queen) ": "q",
-        "(romeo|roy) ": "r",
-        "(sierra|soy) ": "s",
-        "(tango|tay) ": "t",
-        "(uniform|unks) ": "u",
-        "(victor|van) ": "v",
-        "(whiskey|wes) ": "w",
-        "(x-ray|trex) ": "x",
-        "(yankee|yang) ": "y",
-        "(zulu|zooch) ": "z",
-        }
+        "(sky arch)": "A",
+        "(sky brav) ": "B",
+        "(sky char) ": "C",
+        "(sky dell) ": "D",
+        "(sky etch) ": "E",
+        "(sky fox) ": "F",
+        "(sky golf) ": "G",
+        "(sky hark) ": "H",
+        "(sky ice) ": "I",
+        "(sky jinks) ": "J",
+        "(sky kilo) ": "K",
+        "(sky line) ": "L",
+        "(sky mike) ": "M",
+        "(sky nerb) ": "N",
+        "(sky ork) ": "O",
+        "(sky pooch) ": "P",
+        "(sky queen) ": "Q",
+        "(sky roy) ": "R",
+        "(sky soy) ": "S",
+        "(sky tay) ": "T",
+        "(sky unks) ": "U",
+        "(sky van) ": "V",
+        "(sky wes) ": "W",
+        "(sky trex) ": "X",
+        "(sky yang) ": "Y",
+        "(sky zooch) ": "Z",
+    }
+    def returnMap(self):
+        return(self.mapping)
 
 # generate uppercase versions of every letter
-upperLetterMap = {}
-for letter in letterMap:
-    upperLetterMap["(upper|sky) " + letter] = letterMap[letter].upper()
-letterMap.update(upperLetterMap)
 
-numberMap = {
+class Number(MappingRule):
+    exported = False
+    mapping = {
         "zero": "0",
         "one": "1",
         "two": "2",
@@ -196,10 +201,13 @@ numberMap = {
         "seven": "7",
         "eight": "8",
         "nine": "9",
-        }
+    }
 
 
-controlKeyMap = {
+
+class ControlKeys(MappingRule):
+    exported = False
+    mapping = {
         "left": "left",
         "right": "right",
         "up": "up",
@@ -213,10 +221,12 @@ controlKeyMap = {
         "escape": "escape",
         "tab": "tab",
         "backspace": "backspace"
-        }
+    }
 
 # F1 to F12. (do these actually work?)
-functionKeyMap = {
+class FunctionKeys(MappingRule):
+    exported = False
+    mapping = {
         'F one': 'f1',
         'F two': 'f2',
         'F three': 'f3',
@@ -229,18 +239,19 @@ functionKeyMap = {
         'F ten': 'f10',
         'F eleven': 'f11',
         'F twelve': 'f12',
-        }
+    }
 
-pressKeyMap = {}
-pressKeyMap.update(letterMap)
-pressKeyMap.update(numberMap)
-pressKeyMap.update(compound_symbols)
-pressKeyMap.update(functionKeyMap)
 
-letters_map = letterMap
-def keyChoice(name="key"):
-    return Choice(name, pressKeyMap);
-def letterChoice(name="letter"):
-    return Choice(name, letterMap); 
-def numberChoice(name="number"):
-    return Choice(name, numberMap);
+class AllCharacters(CompoundRule):
+    exported = False
+    
+    spec = '<character>'
+    extras = [Alternative(name='character', children=(
+        RuleRef(rule=Letters()),
+        RuleRef(rule=Number()),
+        RuleRef(rule=FunctionKeys()),
+        RuleRef(rule=Symbol())))]
+
+    #TODO placeholder value
+    def value(self, node):
+        return 'a'
