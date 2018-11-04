@@ -1,46 +1,16 @@
-from aenea import (
-    ActionBase,
-    Alternative,
-    AppContext,
-    Choice,
-    Compound,
-    CompoundRule,
-    Config,
-    DictList,
-    DictListRef,
-    Dictation,
-    Empty,
-    Function,
-    Grammar,
-    IntegerRef,
-    Key,
-    List,
-    ListRef,
-    MappingRule,
-    Mimic,
-    Mouse,
-    Optional,
-    Pause,
-    Repeat,
-    Repetition,
-    RuleRef,
-    Text,
-)
-
+import os 
+from aenea import *
 from common import *
 # Make sure dragonfly errors show up in NatLink messages.
 # dragonfly.log.setup_log()
 
-# Load _repeat.txt.
+# Load _repeat.txt which contains formatting functions
 config = Config("words")
 namespace = config.load()
 
-# Load commonly misrecognized words saved to a file.
-# TODO: Revisit.
+
+# load commonly misspelled words into saved_words
 saved_words = []
-
-import os 
-
 word_path = "C:\\Natlink\\Natlink\\Macrosystem\\words_list.txt"
 try:
     with open(word_path, 'r') as file:
@@ -75,10 +45,14 @@ if namespace:
             format_functions[spoken_form] = action
 
 
-saved_word_list = List("saved_word_list", saved_words)
-saved_word_list_ref = ListRef(None, saved_word_list)
-custom_dictation = Alternative([saved_word_list_ref, Dictation()], name="dictation")
+# TODO: revisit custom dictation tends to only custom words when they are the
+# only word of the dictation contains alternative which contains custom words
+# and dictation
+saved_word_list = List("saved_word_list", saved_words) saved_word_list_ref =
+ListRef(None, saved_word_list) custom_dictation =
+Alternative([saved_word_list_ref, Dictation()], name="dictation")
 
+# create our formatting role which contains the format functions and are custom dictation
 class FormatRule(MappingRule):
     exported = False
     mapping  = format_functions
