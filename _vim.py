@@ -146,6 +146,8 @@ class VimMotionRule(CompoundRule):
     defaults = {
         "n": 1
     }
+    def value(self, node):
+        return(node.children[0].value())
 
 class VimRule(CompoundRule):
     spec = '<motion>'
@@ -168,14 +170,13 @@ class VimRule(CompoundRule):
         })]
 
     def _process_recognition(self, node, extras):  # @UnusedVariable
-        print "yo its vim"
 
-        # TODO: Replace with code that checks each type of
-        # node child and executes appropriately
-        motion = extras['motion']
-        print motion
-        Key("{}".format(motion[0])).execute()
-        motion[1].execute()
+        if 'motion' in extras:
+            motion = extras['motion']
+            # motion zero always contains the key count
+            if motion[0] is not None:
+                Key("{}".format(motion[0])).execute()
+            motion[1].execute()
 
 vim_context = ProxyAppContext(title='VIM') 
 grammar = Grammar("vim", context=vim_context)
