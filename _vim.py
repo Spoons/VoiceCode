@@ -1,19 +1,21 @@
 from aenea import *
 from common import *
 from dragonfly.actions.action_base import BoundAction
+import time
 
 class CountableMotionRule(MappingRule):
     exported = False
     mapping = {
-        #
-        "(backward|left)": Key("h"),
-        "(forward|right)": Key("l"),
-        "(zero|first char[acter])": Key("0"),
-        "(caret|first non-blank char[acter])": Key("caret"),
-        "(dollar|last char[acter])": Key("dollar"),
+        # left and right movements
+        "left": Key("h"),
+        "right": Key("l"),
+        "zero": Key("0"),
+        "line start": Key("caret"),
+        "line end": Key("dollar"),
         # "(pipe|column)": Key("bar"),
-        # "find <char>": Key("f,%(char)s"),
-        # "backwards find <char>": Key("s-f,%(char)s"),
+        "find <char>": Key("f,%(char)s"),
+
+        "backwards find <char>": Key("s-f,%(char)s"),
 
         "up": Key("k"),
         "down": Key("j"),
@@ -22,16 +24,19 @@ class CountableMotionRule(MappingRule):
         # "(minus|linewise non-blank up)": Key("minus"),
         # "(plus|linewise non-blank down)": Key("plus"),
         # "(underscore|first non-blank line down)": Key("underscore"),
-
+        
         "word": Key("w"),
-        # "(big|cap) word": Key("s-w"),
+        "sky word": Key("s-w"),
         "end": Key("e"),
-        # "(big|cap) end": Key("s-e"),
+        "sky end": Key("s-e"),
         "back": Key("b"),
-        # "(big|cap) back": Key("s-b"),
+        "sky back": Key("s-b"),
         # "backward end": Key("g,e"),
-        # "backward (big|cap) end": Key("g,s-e"),
+        # "backward sky end": Key("g,s-e"),
     }
+    extras = [
+        RuleRef(name='char', rule=Letters())
+    ]
 
 class UncountableMotionRule(MappingRule):
     exported = False
@@ -47,9 +52,9 @@ class UncountableMotionRule(MappingRule):
         #############
         #  up/down  #
         #############
-        # "line": Key("s-g"),
+        "bottom": Key("s-g"),
         # "end of [last] line": Key("c-end"),
-        # "first non-blank char[acter] on line": Key("g,g"),
+        "top": Key("g,g"),
         "percent": Key("percent"),
         #################
         #  text object  #
@@ -105,10 +110,11 @@ class UncountableMotionRule(MappingRule):
         #"line from top": Key("s-h"),
         #"middle [of (window|screen)]": Key("s-m"),
         #"line from bottom": Key("s-l"),
+        "line": "line",
     }
-
     extras = [
-        RuleRef(name='char', rule=AllCharacters())]
+        RuleRef(name='char', rule=Letters())
+    ]
 
 class VimModifierRule(MappingRule):
     exported = False
@@ -150,13 +156,13 @@ class VimMotionRule(CompoundRule):
         return(node.children[0].value())
 
 class VimRule(CompoundRule):
-    spec = '<motion>'
+    spec = '[<action>] <motion>'
     extras = [
         RuleRef(name="motion", rule=VimMotionRule()),
         Choice(name='action', choices={
             'change': Key('c'),
             'delete': Key('d'),
-            'yank': Key('y'),
+            'yank': Key('y/3'),
             'swap case': Key('g,tilde'),
             'make lowercase': Key('g,u'),
             'make uppercase': Key('g,s-u'),
@@ -171,12 +177,21 @@ class VimRule(CompoundRule):
 
     def _process_recognition(self, node, extras):  # @UnusedVariable
 
+        if 'action' in extras:
+            action = extras['action']
+            action.execute();
+
+        # TODO: there has to be a better way to do this
         if 'motion' in extras:
             motion = extras['motion']
             # motion zero always contains the key count
-            if motion[0] is not None:
+            if motion[0] is int:
                 Key("{}".format(motion[0])).execute()
-            motion[1].execute()
+            if motion == "line":
+                time.sleep(0.01)
+                action.execute();
+            else:
+                motion[1].execute()
 
 vim_context = ProxyAppContext(title='VIM') 
 grammar = Grammar("vim", context=vim_context)

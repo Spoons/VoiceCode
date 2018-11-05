@@ -141,7 +141,7 @@ class Letters(MappingRule):
         "(ice) ": "i",
         "(jinks) ": "j",
         "(kilo) ": "k",
-        "(line) ": "l",
+        "(lie) ": "l",
         "(mike) ": "m",
         "(nerb) ": "n",
         "(ork) ": "o",
