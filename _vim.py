@@ -3,12 +3,13 @@ from common import *
 from dragonfly.actions.action_base import BoundAction
 import time
 
+
 class CountableMotionRule(MappingRule):
     exported = False
     mapping = {
         # left and right movements
-        "left": Key("h"),
-        "right": Key("l"),
+        "left": Key("left"),
+        "right": Key("right"),
         "zero": Key("0"),
         "line start": Key("caret"),
         "line end": Key("dollar"),
@@ -17,26 +18,28 @@ class CountableMotionRule(MappingRule):
 
         "backwards find <char>": Key("s-f,%(char)s"),
 
-        "up": Key("k"),
-        "down": Key("j"),
+        "up": Key("up"),
+        "down": Key("down"),
         # "visible up": Key("g,k"),
         # "visible down": Key("g,j"),
         # "(minus|linewise non-blank up)": Key("minus"),
         # "(plus|linewise non-blank down)": Key("plus"),
         # "(underscore|first non-blank line down)": Key("underscore"),
-        
+
         "word": Key("w"),
         "sky word": Key("s-w"),
-        "end": Key("e"),
+        "word end": Key("e"),
         "sky end": Key("s-e"),
         "back": Key("b"),
         "sky back": Key("s-b"),
         # "backward end": Key("g,e"),
         # "backward sky end": Key("g,s-e"),
+        "line": Literal("line"),
     }
     extras = [
         RuleRef(name='char', rule=Letters())
     ]
+
 
 class UncountableMotionRule(MappingRule):
     exported = False
@@ -75,46 +78,46 @@ class UncountableMotionRule(MappingRule):
         #  marks  #
         ###########
         # TODO: tighten char to [a-vA-Z0-9]
-        #"mark <char>": Key("backtick,%(char)s"),
-        #"mark <char> first non-blank": Key("apostrophe,%(char)s"),
-        #"mark <char> [and] keep jumps": Key("g,backtick,%(char)s"),
-        #"mark <char> first non-blank [and] keep jumps": Key("g,apostrophe,%(char)s"),
-        #"first char[acter] of last (change|yank)": Key("apostrophe,lbracket"),
-        #"last char[acter] of last (change|yank)": Key("apostrophe,rbracket"),
-        #"start of last selection": Key("apostrophe,langle"),
-        #"end of last selection": Key("apostrophe,rangle"),
-        #"restore position": Key("apostrophe,apostrophe"),
-        #"restore position at last buffer exit": Key("apostrophe,dquote"),
-        #"restore position at last insert": Key("apostrophe,caret"),
-        #"restore position at last change": Key("apostrophe,dot"),
-        #"first non-blank char[acater] of next lowercase mark": Key("rbracket,apostrophe"),
-        #"next lowercase mark": Key("rbracket,backtick"),
-        #"first non-blank char[acter] of previous lowercase mark": Key("lbracket,apostrophe"),
-        #"previous lowercase mark": Key("lbracket,backtick"),
+        # "mark <char>": Key("backtick,%(char)s"),
+        # "mark <char> first non-blank": Key("apostrophe,%(char)s"),
+        # "mark <char> [and] keep jumps": Key("g,backtick,%(char)s"),
+        # "mark <char> first non-blank [and] keep jumps": Key("g,apostrophe,%(char)s"),
+        # "first char[acter] of last (change|yank)": Key("apostrophe,lbracket"),
+        # "last char[acter] of last (change|yank)": Key("apostrophe,rbracket"),
+        # "start of last selection": Key("apostrophe,langle"),
+        # "end of last selection": Key("apostrophe,rangle"),
+        # "restore position": Key("apostrophe,apostrophe"),
+        # "restore position at last buffer exit": Key("apostrophe,dquote"),
+        # "restore position at last insert": Key("apostrophe,caret"),
+        # "restore position at last change": Key("apostrophe,dot"),
+        # "first non-blank char[acater] of next lowercase mark": Key("rbracket,apostrophe"),
+        # "next lowercase mark": Key("rbracket,backtick"),
+        # "first non-blank char[acter] of previous lowercase mark": Key("lbracket,apostrophe"),
+        # "previous lowercase mark": Key("lbracket,backtick"),
         ######################
         ##  various motions  #
         ######################
-        #"(percent|match of next item)": Key("percent"),
-        #"previous unmatched (open|left) paren": Key("lbracket,lparen"),
-        #"previous unmatched (open|left) [curly] brace": Key("lbracket,lbrace"),
-        #"next unmatched (close|right) paren": Key("rbracket,rparen"),
-        #"next unmatched (close|right) [curly] brace": Key("rbracket,rbrace"),
-        #"next start of method": Key("rbracket,m"),
-        #"next end of method": Key("rbracket,s-m"),
-        #"previous start of method": Key("lbracket,m"),
-        #"previous end of method": Key("lbracket,s-m"),
-        #"previous unmatched macro": Key("lbracket,hash"),
-        #"next unmatched macro": Key("rbracket,hash"),
-        #"previous start of comment": Key("lbracket,asterisk"),
-        #"next end of comment": Key("rbracket,asterisk"),
-        #"line from top": Key("s-h"),
-        #"middle [of (window|screen)]": Key("s-m"),
-        #"line from bottom": Key("s-l"),
-        "line": "line",
+        # "(percent|match of next item)": Key("percent"),
+        # "previous unmatched (open|left) paren": Key("lbracket,lparen"),
+        # "previous unmatched (open|left) [curly] brace": Key("lbracket,lbrace"),
+        # "next unmatched (close|right) paren": Key("rbracket,rparen"),
+        # "next unmatched (close|right) [curly] brace": Key("rbracket,rbrace"),
+        # "next start of method": Key("rbracket,m"),
+        # "next end of method": Key("rbracket,s-m"),
+        # "previous start of method": Key("lbracket,m"),
+        # "previous end of method": Key("lbracket,s-m"),
+        # "previous unmatched macro": Key("lbracket,hash"),
+        # "next unmatched macro": Key("rbracket,hash"),
+        # "previous start of comment": Key("lbracket,asterisk"),
+        # "next end of comment": Key("rbracket,asterisk"),
+        # "line from top": Key("s-h"),
+        # "middle [of (window|screen)]": Key("s-m"),
+        # "line from bottom": Key("s-l"),
     }
     extras = [
         RuleRef(name='char', rule=Letters())
     ]
+
 
 class VimModifierRule(MappingRule):
     exported = False
@@ -141,24 +144,42 @@ class VimModifierRule(MappingRule):
         "inner quoted string": Key("i,dquote"),
     }
 
+
 class VimMotionRule(CompoundRule):
     exported = False
-    spec = "(<uncountableMotion> | [<n>] <countableMotion>)"
+    spec = "(<uncountableMotion> | [<n>] (<countableMotion> | <modifier>))"
     extras = [
         RuleRef(name="uncountableMotion", rule=UncountableMotionRule()),
         RuleRef(name="countableMotion", rule=CountableMotionRule()),
+        RuleRef(name="modifier", rule=VimModifierRule()),
         IntegerRef("n", 1, 50)
     ]
     defaults = {
         "n": 1
     }
+
     def value(self, node):
-        return(node.children[0].value())
+        actions = node.children[0].value()
+        # for c in node.children:
+        #     print c
+        #     print c.value()
+
+        if type(actions) is Literal:
+            return([actions])
+
+        # check if accountable motion has an integer
+        # if so replace integer with key action
+        if type(actions[0]) is int:
+            actions[0] = Text("%d" % actions[0])
+
+        return(actions)
+
 
 class VimRule(CompoundRule):
     spec = '[<action>] <motion>'
     extras = [
         RuleRef(name="motion", rule=VimMotionRule()),
+        RuleRef(name="modifier", rule=VimModifierRule()),
         Choice(name='action', choices={
             'change': Key('c'),
             'delete': Key('d'),
@@ -177,26 +198,32 @@ class VimRule(CompoundRule):
 
     def _process_recognition(self, node, extras):  # @UnusedVariable
 
+        vim_action = ""
         if 'action' in extras:
-            action = extras['action']
-            action.execute();
+            vim_action = extras['action']
+            vim_action.execute()
 
-        # TODO: there has to be a better way to do this
+        if 'modifier' in extras:
+            modifier = extras['modifier']
+            modifier.execute()
+
         if 'motion' in extras:
             motion = extras['motion']
-            # motion zero always contains the key count
-            if motion[0] is int:
-                Key("{}".format(motion[0])).execute()
-            if motion == "line":
-                time.sleep(0.01)
-                action.execute();
-            else:
-                motion[1].execute()
 
-vim_context = ProxyAppContext(title='VIM') 
+            # print motion
+            for action in motion:
+                if type(action) is Literal:
+                    vim_action.execute()
+                    continue
+                if action is not None:
+                    action.execute()
+
+
+vim_context = ProxyAppContext(title='VIM')
 grammar = Grammar("vim", context=vim_context)
 grammar.add_rule(VimRule())
 grammar.load()
+
 
 def unload():
     global grammar
