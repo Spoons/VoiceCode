@@ -100,31 +100,21 @@ def format_upper_phrase(dictation):
     words = text.split_dictation(dictation)
     return " ".join(w.upper() for w in words)
 
-def format_pre_phrase(dictation):
-    """ pre phrase <dictation> """
-    return " " + " ".join(text.split_dictation(dictation))
-
 def format_trail_phrase(dictation):
-    """ trail phrase <dictation> """
+    """ phrases <dictation> """
     return " ".join(text.split_dictation(dictation)) + " "
 
 def format_sentence(dictation):
-    """ (sentence) <dictation> """
+    """ sentence <dictation> """
     words = text.split_dictation(dictation)
     words[0] = words[0].capitalize();
     return " ".join(words)
 
 def format_trail_sentence(dictation):
-    """ trail (sentence) <dictation> """
+    """ sentences <dictation> """
     words = text.split_dictation(dictation)
     words[0] = words[0].capitalize();
     return " ".join(words) + " "
-
-def format_pre_sentence(dictation):
-    """ pre (sentence) <dictation> """
-    words = text.split_dictation(dictation)
-    words[0] = words[0].capitalize();
-    return " " + " ".join(words)
 
 # Format:  some words 
 def format_padded(dictation):

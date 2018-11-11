@@ -14,12 +14,13 @@ class CountableMotionRule(MappingRule):
         "line start": Key("caret"),
         "line end": Key("dollar"),
         # "(pipe|column)": Key("bar"),
-        "find <char>": Key("f,%(char)s"),
 
+        "find <char>": Key("f,%(char)s"),
         "backwards find <char>": Key("s-f,%(char)s"),
 
         "up": Key("up"),
         "down": Key("down"),
+
         # "visible up": Key("g,k"),
         # "visible down": Key("g,j"),
         # "(minus|linewise non-blank up)": Key("minus"),
@@ -34,7 +35,7 @@ class CountableMotionRule(MappingRule):
         "sky back": Key("s-b"),
         # "backward end": Key("g,e"),
         # "backward sky end": Key("g,s-e"),
-        "line": Literal("line"),
+        "line": "line",
     }
     extras = [
         RuleRef(name='char', rule=Letters())
@@ -160,19 +161,13 @@ class VimMotionRule(CompoundRule):
 
     def value(self, node):
         actions = node.children[0].value()
-        # for c in node.children:
-        #     print c
-        #     print c.value()
 
-        if type(actions) is Literal:
-            return([actions])
-
-        # check if accountable motion has an integer
-        # if so replace integer with key action
-        if type(actions[0]) is int:
-            actions[0] = Text("%d" % actions[0])
-
-        return(actions)
+        if type(actions) is list:
+            if type(actions[0]) is int:
+                actions[0] = Text("%d" % actions[0])
+            return(actions)
+        else:
+            return ([actions])
 
 
 class VimRule(CompoundRule):
@@ -212,7 +207,7 @@ class VimRule(CompoundRule):
 
             # print motion
             for action in motion:
-                if type(action) is Literal:
+                if action == 'line':
                     vim_action.execute()
                     continue
                 if action is not None:
