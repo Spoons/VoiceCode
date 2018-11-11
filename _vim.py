@@ -3,6 +3,7 @@ from common import *
 from dragonfly.actions.action_base import BoundAction
 import time
 
+letterRef = RuleRef(rule = Letters(), name = 'char')
 
 class CountableMotionRule(MappingRule):
     exported = False
@@ -38,7 +39,7 @@ class CountableMotionRule(MappingRule):
         "line": "line",
     }
     extras = [
-        RuleRef(name='char', rule=Letters())
+        letterRef
     ]
 
 
@@ -79,7 +80,7 @@ class UncountableMotionRule(MappingRule):
         #  marks  #
         ###########
         # TODO: tighten char to [a-vA-Z0-9]
-        # "mark <char>": Key("backtick,%(char)s"),
+        "mark <char>": Key("backtick,%(char)s"),
         # "mark <char> first non-blank": Key("apostrophe,%(char)s"),
         # "mark <char> [and] keep jumps": Key("g,backtick,%(char)s"),
         # "mark <char> first non-blank [and] keep jumps": Key("g,apostrophe,%(char)s"),
@@ -87,10 +88,10 @@ class UncountableMotionRule(MappingRule):
         # "last char[acter] of last (change|yank)": Key("apostrophe,rbracket"),
         # "start of last selection": Key("apostrophe,langle"),
         # "end of last selection": Key("apostrophe,rangle"),
-        # "restore position": Key("apostrophe,apostrophe"),
-        # "restore position at last buffer exit": Key("apostrophe,dquote"),
-        # "restore position at last insert": Key("apostrophe,caret"),
-        # "restore position at last change": Key("apostrophe,dot"),
+        "restore position": Key("apostrophe,apostrophe"),
+        "restore position at last buffer exit": Key("apostrophe,dquote"),
+        "restore position at last insert": Key("apostrophe,caret"),
+        "restore position at last change": Key("apostrophe,dot"),
         # "first non-blank char[acater] of next lowercase mark": Key("rbracket,apostrophe"),
         # "next lowercase mark": Key("rbracket,backtick"),
         # "first non-blank char[acter] of previous lowercase mark": Key("lbracket,apostrophe"),
@@ -98,7 +99,7 @@ class UncountableMotionRule(MappingRule):
         ######################
         ##  various motions  #
         ######################
-        # "(percent|match of next item)": Key("percent"),
+        "(percent|match of next item)": Key("percent"),
         # "previous unmatched (open|left) paren": Key("lbracket,lparen"),
         # "previous unmatched (open|left) [curly] brace": Key("lbracket,lbrace"),
         # "next unmatched (close|right) paren": Key("rbracket,rparen"),
@@ -111,12 +112,12 @@ class UncountableMotionRule(MappingRule):
         # "next unmatched macro": Key("rbracket,hash"),
         # "previous start of comment": Key("lbracket,asterisk"),
         # "next end of comment": Key("rbracket,asterisk"),
-        # "line from top": Key("s-h"),
-        # "middle [of (window|screen)]": Key("s-m"),
-        # "line from bottom": Key("s-l"),
+        "viewer top": Key("s-h"),
+        "viewer middle": Key("s-m"),
+        "viewer bottom": Key("s-l"),
     }
     extras = [
-        RuleRef(name='char', rule=Letters())
+        letterRef
     ]
 
 
@@ -125,24 +126,24 @@ class VimModifierRule(MappingRule):
     mapping = {
         "a word": Key("a,w"),
         "inner word": Key("i,w"),
-        "a (big|cap word)": Key("a,s-w"),
-        "inner (big|cap word)": Key("i,s-w"),
+        "a sky word": Key("a,s-w"),
+        "inner sky word": Key("i,s-w"),
         "a sentence": Key("a,s"),
         "inner sentence": Key("i,s"),
         "a paragraph": Key("a,p"),
         "inner paragraph": Key("i,p"),
-        "a bracket block": Key("a,lbracket"),
-        "inner bracket block": Key("i,lbracket"),
-        "a paren block": Key("a,b"),
-        "inner paren block": Key("i,b"),
-        "an angle block": Key("a,langle"),
-        "inner angle block": Key("i,langle"),
+        "a lack": Key("a,lbracket"),
+        "inner lack": Key("i,lbracket"),
+        "a len": Key("a,b"),
+        "inner len": Key("i,b"),
+        "an lack": Key("a,langle"),
+        "inner lack": Key("i,langle"),
         "a tag block": Key("a,t"),
         "inner tag block": Key("i,t"),
-        "a curly block": Key("a,s-b"),
-        "inner curly block": Key("i,s-b"),
-        "a quoted string": Key("a,dquote"),
-        "inner quoted string": Key("i,dquote"),
+        "a lace": Key("a,s-b"),
+        "inner lace": Key("i,s-b"),
+        "a quote": Key("a,dquote"),
+        "inner quote": Key("i,dquote"),
     }
 
 
@@ -170,11 +171,26 @@ class VimMotionRule(CompoundRule):
             return ([actions])
 
 
+class VimNormalRule(MappingRule):
+    exported = False
+    mapping = {
+        'sput': Key('c-u'),
+        'spown': Key('c-d'),
+        
+        'set mark <char>': Key('m, %(char)s'),
+        'paste': Key('p'),
+        'vim save': Key('colon, w, q, enter'),
+        'buffer next': Key('colon, b, n, enter'),
+
+    }
+    extras = [letterRef]
+
 class VimRule(CompoundRule):
-    spec = '[<action>] <motion>'
+    spec = '([<action>] <motion>) | <normal>'
     extras = [
         RuleRef(name="motion", rule=VimMotionRule()),
         RuleRef(name="modifier", rule=VimModifierRule()),
+        RuleRef(name="normal", rule=VimNormalRule()),
         Choice(name='action', choices={
             'change': Key('c'),
             'delete': Key('d'),
@@ -212,6 +228,9 @@ class VimRule(CompoundRule):
                     continue
                 if action is not None:
                     action.execute()
+        if 'normal' in extras:
+            normal = extras['normal']
+            normal.execute()
 
 
 vim_context = ProxyAppContext(title='VIM')
