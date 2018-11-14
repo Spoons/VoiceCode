@@ -141,7 +141,7 @@ class Letters(MappingRule):
         "(ice) ": "i",
         "(jinks) ": "j",
         "(kilo) ": "k",
-        "(lie) ": "l",
+        "(lie|line) ": "l",
         "(mike) ": "m",
         "(nerb) ": "n",
         "(ork) ": "o",
@@ -167,7 +167,7 @@ class Letters(MappingRule):
         "(sky ice) ": "I",
         "(sky jinks) ": "J",
         "(sky kilo) ": "K",
-        "(sky line) ": "L",
+        "(sky (lie|line)) ": "L",
         "(sky mike) ": "M",
         "(sky nerb) ": "N",
         "(sky ork) ": "O",
@@ -252,6 +252,3 @@ class AllCharacters(CompoundRule):
         RuleRef(rule=FunctionKeys()),
         RuleRef(rule=Symbol())))]
 
-    #TODO placeholder value
-    def value(self, node):
-        return 'a'

@@ -171,6 +171,24 @@ class VimMotionRule(CompoundRule):
             return ([actions])
 
 
+
+class VimExRule(CompoundRule):
+    exported = False
+    mapping = {
+        'vim save': Key('w, q'),
+        'buffer next': Key('b, n'),
+        'buffer previous': Key('b, n'),
+        'buffer list': Key('ls'),
+        'buffer <letters>': Text('b %(letters)s'),
+        'vim split': Key('sp'),
+        'horizontal split': Key('vsp'),
+        'vim edit': Text('e '),
+    }
+    def enter_ex:
+        return(Key('escape, colon'))
+    def execute:
+        return(Key('enter'))
+
 class VimNormalRule(MappingRule):
     exported = False
     mapping = {
@@ -179,11 +197,14 @@ class VimNormalRule(MappingRule):
         
         'set mark <char>': Key('m, %(char)s'),
         'paste': Key('p'),
-        'vim save': Key('colon, w, q, enter'),
-        'buffer next': Key('colon, b, n, enter'),
 
     }
     extras = [letterRef]
+class VimInsertRule(MappingRule):
+    exported = False
+    mapping = {
+        'vim complete': Key('control, p'),
+    }
 
 class VimRule(CompoundRule):
     spec = '([<action>] <motion>) | <normal>'
@@ -205,6 +226,7 @@ class VimRule(CompoundRule):
             'shift right': Key('rangle'),
             'shift left': Key('langle'),
             'define fold': Key('z,f'),
+            'visual': Key('v'),
         })]
 
     def _process_recognition(self, node, extras):  # @UnusedVariable
@@ -231,7 +253,6 @@ class VimRule(CompoundRule):
         if 'normal' in extras:
             normal = extras['normal']
             normal.execute()
-
 
 vim_context = ProxyAppContext(title='VIM')
 grammar = Grammar("vim", context=vim_context)
