@@ -14,19 +14,15 @@ class CountableMotionRule(MappingRule):
         "line start": Key("caret"),
         "line end": Key("dollar"),
         # "(pipe|column)": Key("bar"),
-
-        "find <allchar>": Key("f,%(allchar)s"),
-        "backwards find <allchar>": Key("s-f,%(allchar)s"),
-
+        "find <allchar>": Text("f%(allchar)s"),
+        "backwards find <allchar>": Text("F%(allchar)s"),
         "up": Key("up"),
         "down": Key("down"),
-
         # "visible up": Key("g,k"),
         # "visible down": Key("g,j"),
         # "(minus|linewise non-blank up)": Key("minus"),
         # "(plus|linewise non-blank down)": Key("plus"),
         # "(underscore|first non-blank line down)": Key("underscore"),
-
         "word": Key("w"),
         "sky word": Key("s-w"),
         "word end": Key("e"),
@@ -35,11 +31,11 @@ class CountableMotionRule(MappingRule):
         "sky back": Key("s-b"),
         # "backward end": Key("g,e"),
         # "backward sky end": Key("g,s-e"),
+        "real line": Key("s-g"),
         "line": "line",
     }
     extras = [
-        letterRef,
-        allCharRef,
+        RuleRef(rule=AllCharacters(), name='allchar'),
     ]
 
 
@@ -89,9 +85,9 @@ class UncountableMotionRule(MappingRule):
         # "start of last selection": Key("apostrophe,langle"),
         # "end of last selection": Key("apostrophe,rangle"),
         "restore position": Key("apostrophe,apostrophe"),
-        "restore position at last buffer exit": Key("apostrophe,dquote"),
-        "restore position at last insert": Key("apostrophe,caret"),
-        "restore position at last change": Key("apostrophe,dot"),
+        # "restore position at last buffer exit": Key("apostrophe,dquote"),
+        # "restore position at last insert": Key("apostrophe,caret"),
+        # "restore position at last change": Key("apostrophe,dot"),
         # "first non-blank char[acater] of next lowercase mark": Key("rbracket,apostrophe"),
         # "next lowercase mark": Key("rbracket,backtick"),
         # "first non-blank char[acter] of previous lowercase mark": Key("lbracket,apostrophe"),
@@ -99,7 +95,7 @@ class UncountableMotionRule(MappingRule):
         ######################
         ##  various motions  #
         ######################
-        "(percent|match of next item)": Key("percent"),
+        "(percent|match)": Key("percent"),
         # "previous unmatched (open|left) paren": Key("lbracket,lparen"),
         # "previous unmatched (open|left) [curly] brace": Key("lbracket,lbrace"),
         # "next unmatched (close|right) paren": Key("rbracket,rparen"),
@@ -117,7 +113,7 @@ class UncountableMotionRule(MappingRule):
         "viewer bottom": Key("s-l"),
     }
     extras = [
-        letterRef
+        RuleRef(rule=Letters(name='letters3'), name='char')
     ]
 
 
@@ -174,40 +170,33 @@ class VimMotionRule(CompoundRule):
 class VimVisualRule(MappingRule):
     exported = False
     mapping = {
-        'delete' : Key('d'),
+        'delete': Key('d'),
         'yank': Key('y'),
         'replace': Key('r'),
     }
+
 
 class VimExRule(MappingRule):
     exported = False
     mapping = {
         'vim save': Key('w') + Key('enter'),
+        'vim save all': Key('w,a') + Key('enter'),
         'vim save quit': Key('w, q') + Key('enter'),
-        
+        'vim file': Text("Files") + Key('enter'),
+        'tab new': Text("tabnew"),
+
         'buffer next': Key('b, n') + Key('enter'),
         'buffer previous': Key('b, n') + Key('enter'),
         'buffer list': Text('ls') + Key('enter'),
         'buffer <char>': Text('b %(char)s') + Key('enter'),
 
-        'vim split': Text('sp') + Key('enter'),
-        'horizontal split': Text('vsp') + Key('enter'),
-
-        'vim edit': Text('e '),
+        'vim split': Text('vsp') + Key('enter'),
+        'horizontal split': Text('sp') + Key('enter'),
     }
     extras = [
-        letterRef,
-    ] 
+        RuleRef(rule=Letters(name='letters4'), name='char')
+    ]
 
-    def process_recognition(self, node):
-        enter_ex();
-        self._process_recognition(self, node)
-
-    def enter_ex():
-        return(Key('escape, colon'))
-    def enter():
-        return(Key('enter'))
-VimExRuleRef = RuleRef(rule=VimExRule(), name="ex")
 
 class VimNormalRule(MappingRule):
     exported = False
@@ -218,23 +207,28 @@ class VimNormalRule(MappingRule):
         'set mark <char>': Key('m, %(char)s'),
         'paste': Key('p'),
 
-        'right split': Key('c-h'),
-        'left split': Key('c-l'),
+        'right split': Key('c-l'),
+        'left split': Key('c-h'),
         'up split': Key('c-k'),
         'down split': Key('c-j'),
 
     }
-    extras = [letterRef]
+    extras = [
+        RuleRef(rule=Letters(name='letter2'), name='char')
+    ]
+
+
 class VimInsertRule(MappingRule):
     exported = False
     mapping = {
         'vim complete': Key('control, p'),
     }
 
+
 class VimRule(CompoundRule):
-    spec = '([<action> | <visual>] <motion>) | (<normal> | <visual>)'
+    spec = '([<action> | <visual>] <motion>) | (<normal>) | (<ex>)'
     extras = [
-        VimExRuleRef,
+        RuleRef(name="ex", rule=VimExRule()),
         RuleRef(name="motion", rule=VimMotionRule()),
         RuleRef(name="modifier", rule=VimModifierRule()),
         RuleRef(name="normal", rule=VimNormalRule()),
@@ -259,15 +253,20 @@ class VimRule(CompoundRule):
             'visual line': Key('V')
         })]
 
+    def enter_ex(self):
+        Key('escape, colon').execute()
+
     def _process_recognition(self, node, extras):  # @UnusedVariable
+
         if 'ex' in extras:
             ex = extras['ex']
+            self.enter_ex()
             ex.execute()
 
         if 'visual' in extras:
-            visual = extras['ex']
+            visual = extras['visual']
             visual.execute()
-        
+
         vim_action = ""
         if 'action' in extras:
             vim_action = extras['action']
@@ -279,6 +278,7 @@ class VimRule(CompoundRule):
 
         if 'motion' in extras:
             motion = extras['motion']
+            print motion
 
             # print motion
             for action in motion:
@@ -290,6 +290,7 @@ class VimRule(CompoundRule):
         if 'normal' in extras:
             normal = extras['normal']
             normal.execute()
+
 
 vim_context = ProxyAppContext(title='VIM')
 grammar = Grammar("vim", context=vim_context)

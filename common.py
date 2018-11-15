@@ -1,113 +1,125 @@
 from aenea import *
 
+
 class Symbol(MappingRule):
     exported = False
     mapping = {
-            "(bar|vertical bar|pipe)": "|",
-            "(dash|minus|hyphen)": "-",
-            "(dit|period)": ".",
-            "comma": ",",
-            "backslash": "\\",
-            "underscore": "_",
-            "(star|asterisk)": "*",
-            "colon": ":",
-            "(semicolon|semi-colon)": ";",
-            "at": "@",
-            "[double] quote": '"',
-            "squote": "'",
-            "hash": "#",
-            "dollar": "$",
-            "percent": "%",
-            "ampersand": "&",
-            "slash": "/",
-            "equal": "=",
-            "plus": "+",
-            "space": " ",
-            "bang": "!",
-            "question": "?",
-            "caret": "^",
-            'backtick': "`",
-            "tilde": "~",
-            }
+        "(bar|vertical bar|pipe)": "|",
+        "(dash|minus|hyphen)": "-",
+        "(dot|period)": ".",
+        "com": ",",
+        "backslash": "\\",
+        "underscore": "_",
+        "(star|asterisk)": "*",
+        "colon": ":",
+        "(semicolon|semi-colon)": ";",
+        "at": "@",
+        "[double] quote": '"',
+        "squote": "'",
+        "hash": "#",
+        "dollar": "$",
+        "percent": "%",
+        "ampersand": "&",
+        "slash": "/",
+        "equal": "=",
+        "plus": "+",
+        "space": " ",
+        "bang": "!",
+        "question": "?",
+        "caret": "^",
+        'backtick': "`",
+        "tilde": "~",
+        'langle': '<',
+        'lace':   '{:',
+        'lack':   '[',
+        'len':    '(',
+        'rangle': '>',
+        'race':   '}',
+        'rack':   ']',
+        '(ren|wren)':   ')',
+    }
+
 
 compound_symbols = {
-        "plus": "+",
-        "plus sign": "+",
-        "plus twice": "++",
-        "plus sign twice": "++",
-        "minus": "-",
-        "hyphen": "-",
-        "dash": "-",
-        ",": ",",
-        "colon": ":",
-        "equal": "=",
-        "equal sign": "=",
-        "equal twice": "==",
-        "equal sign twice": "==",
-        "not equal": "!=",
-        "plus equal": "+=",
-        "minus equal": "-=",
-        "greater than": ">",
-        "rangle": ">",
-        "lange": "<",
-        "rangle twice": ">>",
-        "lange twice": ">>",
-        "rangle equal": ">=",
-        "lange equal": "<=",
-        "dot": ".",
-        "period": ".",
-        "lope": "(",
-        "len": "(",
-        "ren": ")",
-        "close paren": ")",
-        "lace": "{",
-        "open brace": "{",
-        "race": "}",
-        "close brace": "}",
-        "lack": "[",
-        "open bracket": "[",
-        "rack": "]",
-        "close bracket": "]",
-        "[double] quote": "\"",
-        "open quote": "\"",
-        "close quote": "\"",
-        "semi": ";",
-        "semicolon": ";",
-        "bang": "!",
-        "exclamation mark": "!",
-        "percent": "%",
-        "percent sign": "%",
-        "star": "*",
-        "asterisk": "*",
-        "backslash": "\\",
-        "slash": "/",
-        "tilde": "~",
-        "backtick": "`",
-        "underscore": "_",
-        "underscore twice": "__",
-        "dunder": "__",
-        "single quote": "'",
-        "apostrophe": "'",
-        "dollar": "$",
-        "dollar sign": "$",
-        "caret": "^",
-        "arrow": "->",
-        "fat arrow": "=>",
-        "colon twice": "::",
-        "amper": "&",
-        "ampersand": "&",
-        "amper twice": "&&",
-        "ampersand twice": "&&",
-        "pipe": "|",
-        "pipe twice": "||",
-        "hash": "#",
-        "number sign": "#",
-        "at sign": "@",
-        "question": "?",
-        "question mark": "?",
+    "plus": "+",
+    "plus sign": "+",
+    "plus twice": "++",
+    "plus sign twice": "++",
+    "minus": "-",
+    "hyphen": "-",
+    "dash": "-",
+    ",": ",",
+    "colon": ":",
+    "equal": "=",
+    "equal sign": "=",
+    "equal twice": "==",
+    "equal sign twice": "==",
+    "not equal": "!=",
+    "plus equal": "+=",
+    "minus equal": "-=",
+    "greater than": ">",
+    "rangle": ">",
+    "lange": "<",
+    "rangle twice": ">>",
+    "lange twice": ">>",
+    "rangle equal": ">=",
+    "lange equal": "<=",
+    "dot": ".",
+    "period": ".",
+    "lope": "(",
+    "len": "(",
+    "ren": ")",
+    "close paren": ")",
+    "lace": "{",
+    "open brace": "{",
+    "race": "}",
+    "close brace": "}",
+    "lack": "[",
+    "open bracket": "[",
+    "rack": "]",
+    "close bracket": "]",
+    "[double] quote": "\"",
+    "open quote": "\"",
+    "close quote": "\"",
+    "semi": ";",
+    "semicolon": ";",
+    "bang": "!",
+    "exclamation mark": "!",
+    "percent": "%",
+    "percent sign": "%",
+    "star": "*",
+    "asterisk": "*",
+    "backslash": "\\",
+    "slash": "/",
+    "tilde": "~",
+    "backtick": "`",
+    "underscore": "_",
+    "underscore twice": "__",
+    "dunder": "__",
+    "single quote": "'",
+    "apostrophe": "'",
+    "dollar": "$",
+    "dollar sign": "$",
+    "caret": "^",
+    "arrow": "->",
+    "fat arrow": "=>",
+    "colon twice": "::",
+    "amper": "&",
+    "ampersand": "&",
+    "amper twice": "&&",
+    "ampersand twice": "&&",
+    "pipe": "|",
+    "pipe twice": "||",
+    "hash": "#",
+    "number sign": "#",
+    "at sign": "@",
+    "question": "?",
+    "question mark": "?",
 }
 
 # Modifiers for the press-command.
+
+
 class Modifiers(MappingRule):
     exported = False
     mapping = {
@@ -118,6 +130,8 @@ class Modifiers(MappingRule):
     }
 
 # Modifiers for the press-command, if only the modifier is pressed.
+
+
 class SingleModifiers(MappingRule):
     exported = False
     mapping = {
@@ -126,6 +140,7 @@ class SingleModifiers(MappingRule):
         "shift": "shift",
         "super": "win",
     }
+
 
 class Letters(MappingRule):
     exported = False
@@ -183,10 +198,10 @@ class Letters(MappingRule):
         "(sky yang) ": "Y",
         "(sky zooch) ": "Z",
     }
+
     def returnMap(self):
         return(self.mapping)
 
-# generate uppercase versions of every letter
 
 class Number(MappingRule):
     exported = False
@@ -202,7 +217,6 @@ class Number(MappingRule):
         "eight": "8",
         "nine": "9",
     }
-
 
 
 class ControlKeys(MappingRule):
@@ -224,6 +238,8 @@ class ControlKeys(MappingRule):
     }
 
 # F1 to F12. (do these actually work?)
+
+
 class FunctionKeys(MappingRule):
     exported = False
     mapping = {
@@ -242,20 +258,16 @@ class FunctionKeys(MappingRule):
     }
 
 
-letterRef = RuleRef(rule = Letters(), name = 'char')
-numberRef = RuleRef(rule = Number(), name = 'num')
-functionRef = RuleRef(rule = FunctionKeys(), name = 'func')
-symbolRef = RuleRef(rule = Symbol(), name = 'symbol')
-allCharRef = RuleRef(rule = AllCharacters(), name = 'allchar')
-
 class AllCharacters(CompoundRule):
     exported = False
-    
+
     spec = '<character>'
     extras = [Alternative(name='character', children=(
-        letterRef,
-        numberRef,
-        functionRef,
-        symbolRef,
-))]
+        RuleRef(rule=Letters(), name='char'),
+        RuleRef(rule=Number(), name='num'),
+        RuleRef(rule=Symbol(), name='symbol'),
+    ))]
 
+    def value(self, node):
+        actions = node.children[0].value()
+        return actions
