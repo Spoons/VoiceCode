@@ -242,13 +242,20 @@ class FunctionKeys(MappingRule):
     }
 
 
+letterRef = RuleRef(rule = Letters(), name = 'char')
+numberRef = RuleRef(rule = Number(), name = 'num')
+functionRef = RuleRef(rule = FunctionKeys(), name = 'func')
+symbolRef = RuleRef(rule = Symbol(), name = 'symbol')
+allCharRef = RuleRef(rule = AllCharacters(), name = 'allchar')
+
 class AllCharacters(CompoundRule):
     exported = False
     
     spec = '<character>'
     extras = [Alternative(name='character', children=(
-        RuleRef(rule=Letters()),
-        RuleRef(rule=Number()),
-        RuleRef(rule=FunctionKeys()),
-        RuleRef(rule=Symbol())))]
+        letterRef,
+        numberRef,
+        functionRef,
+        symbolRef,
+))]
 

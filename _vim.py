@@ -3,7 +3,6 @@ from common import *
 from dragonfly.actions.action_base import BoundAction
 import time
 
-letterRef = RuleRef(rule = Letters(), name = 'char')
 
 class CountableMotionRule(MappingRule):
     exported = False
@@ -16,8 +15,8 @@ class CountableMotionRule(MappingRule):
         "line end": Key("dollar"),
         # "(pipe|column)": Key("bar"),
 
-        "find <char>": Key("f,%(char)s"),
-        "backwards find <char>": Key("s-f,%(char)s"),
+        "find <allchar>": Key("f,%(allchar)s"),
+        "backwards find <allchar>": Key("s-f,%(allchar)s"),
 
         "up": Key("up"),
         "down": Key("down"),
@@ -39,7 +38,8 @@ class CountableMotionRule(MappingRule):
         "line": "line",
     }
     extras = [
-        letterRef
+        letterRef,
+        allCharRef,
     ]
 
 
@@ -171,32 +171,57 @@ class VimMotionRule(CompoundRule):
             return ([actions])
 
 
-
-class VimExRule(CompoundRule):
+class VimVisualRule(MappingRule):
     exported = False
     mapping = {
-        'vim save': Key('w, q'),
-        'buffer next': Key('b, n'),
-        'buffer previous': Key('b, n'),
-        'buffer list': Key('ls'),
-        'buffer <letters>': Text('b %(letters)s'),
-        'vim split': Key('sp'),
-        'horizontal split': Key('vsp'),
+        'delete' : Key('d'),
+        'yank': Key('y'),
+        'replace': Key('r'),
+    }
+
+class VimExRule(MappingRule):
+    exported = False
+    mapping = {
+        'vim save': Key('w') + Key('enter'),
+        'vim save quit': Key('w, q') + Key('enter'),
+        
+        'buffer next': Key('b, n') + Key('enter'),
+        'buffer previous': Key('b, n') + Key('enter'),
+        'buffer list': Text('ls') + Key('enter'),
+        'buffer <char>': Text('b %(char)s') + Key('enter'),
+
+        'vim split': Text('sp') + Key('enter'),
+        'horizontal split': Text('vsp') + Key('enter'),
+
         'vim edit': Text('e '),
     }
-    def enter_ex:
+    extras = [
+        letterRef,
+    ] 
+
+    def process_recognition(self, node):
+        enter_ex();
+        self._process_recognition(self, node)
+
+    def enter_ex():
         return(Key('escape, colon'))
-    def execute:
+    def enter():
         return(Key('enter'))
+VimExRuleRef = RuleRef(rule=VimExRule(), name="ex")
 
 class VimNormalRule(MappingRule):
     exported = False
     mapping = {
         'sput': Key('c-u'),
         'spown': Key('c-d'),
-        
+
         'set mark <char>': Key('m, %(char)s'),
         'paste': Key('p'),
+
+        'right split': Key('c-h'),
+        'left split': Key('c-l'),
+        'up split': Key('c-k'),
+        'down split': Key('c-j'),
 
     }
     extras = [letterRef]
@@ -207,8 +232,9 @@ class VimInsertRule(MappingRule):
     }
 
 class VimRule(CompoundRule):
-    spec = '([<action>] <motion>) | <normal>'
+    spec = '([<action> | <visual>] <motion>) | (<normal> | <visual>)'
     extras = [
+        VimExRuleRef,
         RuleRef(name="motion", rule=VimMotionRule()),
         RuleRef(name="modifier", rule=VimModifierRule()),
         RuleRef(name="normal", rule=VimNormalRule()),
@@ -226,11 +252,22 @@ class VimRule(CompoundRule):
             'shift right': Key('rangle'),
             'shift left': Key('langle'),
             'define fold': Key('z,f'),
+        }),
+        Choice(name='visual', choices={
             'visual': Key('v'),
+            'visual block': Key('c-v'),
+            'visual line': Key('V')
         })]
 
     def _process_recognition(self, node, extras):  # @UnusedVariable
+        if 'ex' in extras:
+            ex = extras['ex']
+            ex.execute()
 
+        if 'visual' in extras:
+            visual = extras['ex']
+            visual.execute()
+        
         vim_action = ""
         if 'action' in extras:
             vim_action = extras['action']
