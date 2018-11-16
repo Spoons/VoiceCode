@@ -13,16 +13,12 @@ class CountableMotionRule(MappingRule):
         "zero": Key("0"),
         "line start": Key("caret"),
         "line end": Key("dollar"),
-        # "(pipe|column)": Key("bar"),
         "find <allchar>": Text("f%(allchar)s"),
-        "backwards find <allchar>": Text("F%(allchar)s"),
+        "be find <allchar>": Text("F%(allchar)s"),
         "up": Key("up"),
         "down": Key("down"),
-        # "visible up": Key("g,k"),
-        # "visible down": Key("g,j"),
-        # "(minus|linewise non-blank up)": Key("minus"),
-        # "(plus|linewise non-blank down)": Key("plus"),
-        # "(underscore|first non-blank line down)": Key("underscore"),
+        "visible up": Key("g,k"),
+        "visible down": Key("g,j"),
         "word": Key("w"),
         "sky word": Key("s-w"),
         "word end": Key("e"),
@@ -33,6 +29,9 @@ class CountableMotionRule(MappingRule):
         # "backward sky end": Key("g,s-e"),
         "real line": Key("s-g"),
         "line": "line",
+        'next section': Key('lbracket, lbracket'),
+        'previous section': Key('rbracket, rbracket'),
+        
     }
     extras = [
         RuleRef(rule=AllCharacters(), name='allchar'),
@@ -140,6 +139,8 @@ class VimModifierRule(MappingRule):
         "inner lace": Key("i,s-b"),
         "a quote": Key("a,dquote"),
         "inner quote": Key("i,dquote"),
+        "a squote": Key("a,quote"),
+        "inner squote": Key("i,quote"),
     }
 
 
@@ -182,6 +183,8 @@ class VimExRule(MappingRule):
         'vim save': Key('w') + Key('enter'),
         'vim save all': Key('w,a') + Key('enter'),
         'vim save quit': Key('w, q') + Key('enter'),
+        'vim quit': Key('q,enter'),
+        
         'vim file': Text("Files") + Key('enter'),
         'tab new': Text("tabnew"),
 
@@ -192,6 +195,13 @@ class VimExRule(MappingRule):
 
         'vim split': Text('vsp') + Key('enter'),
         'horizontal split': Text('sp') + Key('enter'),
+
+        #git fugitive
+        'git add': Text('Gwrite'),
+        'git commit': Text('Gcommit'),
+        'git push': Text('Gpush'),
+        'git pull': Text('Gpull'),
+        
     }
     extras = [
         RuleRef(rule=Letters(name='letters4'), name='char')
@@ -201,8 +211,8 @@ class VimExRule(MappingRule):
 class VimNormalRule(MappingRule):
     exported = False
     mapping = {
-        'sput': Key('c-u'),
-        'spown': Key('c-d'),
+        'gope': Key('c-u'),
+        'drop': Key('c-d'),
 
         'set mark <char>': Key('m, %(char)s'),
         'paste': Key('p'),
@@ -278,7 +288,7 @@ class VimRule(CompoundRule):
 
         if 'motion' in extras:
             motion = extras['motion']
-            print motion
+            # print motion
 
             # print motion
             for action in motion:
