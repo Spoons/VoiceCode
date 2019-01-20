@@ -273,4 +273,5 @@ class AllCharacters(CompoundRule):
     def value(self, node):
         actions = node.children[0].value()
         return actions
+
 AllCharacterRef = RuleRef(rule=AllCharacters(), name="allchar")

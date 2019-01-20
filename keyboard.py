@@ -13,29 +13,11 @@
 from common import *
 
 from natlink import setMicState
-from aenea import (
-    Grammar,
-    MappingRule,
-    Text,
-    Key,
-    Mimic,
-    Function,
-    Dictation,
-    Choice,
-    Window,
-    Config,
-    Section,
-    Item,
-    IntegerRef,
-    Alternative,
-    RuleRef,
-    Repetition,
-    CompoundRule,
-    AppContext,
-)
+from aenea import *
 
 from dragonfly.actions.keyboard import keyboard
 from dragonfly.actions.typeables import typeables
+
 if 'semicolon' not in typeables:
     typeables["semicolon"] = keyboard.get_typeable(char=';')
 
@@ -67,10 +49,9 @@ def handle_word(text):
             Mimic(' '.join(words[1:])).execute()
 
 
-grammarCfg = Config("multi edit")
-grammarCfg.cmd = Section("Language section")
-grammarCfg.cmd.map = Item(
-    {
+class KeystrokeRule(MappingRule):
+    exported = False
+    mapping = {
         # Navigation keys.
         "up [<n>]": Key("up:%(n)d"),
         "down [<n>]": Key("down:%(n)d"),
@@ -78,7 +59,6 @@ grammarCfg.cmd.map = Item(
         "right [<n>]": Key("right:%(n)d"),
         "page up [<n>]": Key("pgup:%(n)d"),
         "page down [<n>]": Key("pgdown:%(n)d"),
-
         "home": Key("home"),
         "end": Key("end"),
         "doc home": Key("c-home/3"),
@@ -118,7 +98,7 @@ grammarCfg.cmd.map = Item(
 
         # Shorthand multiple characters.
         "double <letters>": Text("%(letters)s%(letters)s"),
-        # "triple <letters>": Text("%(letters)s%(letters)s%(letters)s"),
+        "triple <letters>": Text("%(letters)s%(letters)s%(letters)s"),
         "double escape": Key("escape, escape"),  # Exiting menus.
         'triple tab': Key('tab/3') * 3,
         'double tab': Key('tab/3') * 2,
@@ -168,16 +148,7 @@ grammarCfg.cmd.map = Item(
         "pad <allchar>": Text(" %(allchar)s "),
         "press <allchar>": Text("%(allchar)s"),
 
-    },
-    namespace={
-        "Key": Key,
-        "Text": Text,
     }
-)
-
-class KeystrokeRule(MappingRule):
-    exported = False
-    mapping = grammarCfg.cmd.map
     extras = [
         IntegerRef("n", 1, 100),
         IntegerRef("num", 0, 1000),
