@@ -38,6 +38,7 @@ class Symbol(MappingRule):
         'rack':   ']',
         '(ren|wren)':   ')',
     }
+SymbolRef = RuleRef(rule=Symbol, name="symbol")
 
 
 compound_symbols = {
@@ -129,6 +130,7 @@ class Modifiers(MappingRule):
         "super": "w",
     }
 
+SymbolRef = RuleRef(rule=Symbol, name="symbol")
 # Modifiers for the press-command, if only the modifier is pressed.
 
 
@@ -142,6 +144,7 @@ class SingleModifiers(MappingRule):
     }
 
 
+SymbolRef = RuleRef(rule=Symbol, name="symbol")
 class Letters(MappingRule):
     exported = False
     mapping = {
@@ -202,6 +205,7 @@ class Letters(MappingRule):
     def returnMap(self):
         return(self.mapping)
 
+SymbolRef = RuleRef(rule=Symbol, name="symbol")
 
 class Number(MappingRule):
     exported = False
@@ -218,6 +222,7 @@ class Number(MappingRule):
         "nine": "9",
     }
 
+SymbolRef = RuleRef(rule=Symbol, name="symbol")
 
 class ControlKeys(MappingRule):
     exported = False
