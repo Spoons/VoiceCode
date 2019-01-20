@@ -1,9 +1,0 @@
-int
-void
-vim
-kait
-def
-var
-char
-string
-error
