@@ -19,39 +19,45 @@ git_array = [
     'status',
     'tag',
 ]
-gitcommand = {}
-for command in git_array:
-    gitcommand[command] = command
+def ListToChoice(clist, name):
+    command_dictionary = {}
+    for command in clist:
+        command_dictionary[command] = command
+    return(Choice(name, command_dictionary))
 
+slap = Key('enter')
 class TerminalRule(MappingRule):
     mapping = {
         'git': Text('git'),
         'git <gitcommand>': Text('git %(gitcommand)s'),
         'move': Text('mv '),
+        'move home': Text('mv ~') + slap,
+        'move root': Text('mv ~') + slap,
         'cp': Text('cp -r'),
-        'fuzzy': Text('c'),
+        'fuzzy': Text('c') + slap,
         'fuzzy select': Key('c-t'),
-        'fuzzy home': Text('ch'),
+        'fuzzy home': Text('ch') + slap,
         'rsync': Text('rsync '),
         'yay': Text('yay'),
         'make dir': Text('mkdir '),
         'python': Text('python'),
         'python two': Text('python2 '),
         'tee mux': Text('tmux '),
-        'list': Text('ls -ltr '),
+        'list': Text('ls -ltr ') + slap,
         'exit': Text('exit'),
+
         'yay': Text('yay'),
-        'x prop': Text('xprop'),
+        'x prop': Text('xprop') + slap,
         'sudo': Text('sudo'),
         'sue': Text('su'),
         'stop': Key('c-d'),
         'suspend': Key('c-z'),
-        'resume': Text('fg'),
+        'resume': Text('fg') + slap,
         'system control': Text('systemctl'),
         'up directory': Text('../'),
     }
     extras = [
-         Choice('gitcommand', gitcommand)
+        ListToChoice(git_array, "gitcommand")
     ]
 
 terminal_context = ProxyAppContext(title='urxvt')

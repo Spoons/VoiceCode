@@ -145,6 +145,7 @@ class KeystrokeRule(MappingRule):
 
         'number <num>': Text("%(num)d"),
         "<letters>": Text("%(letters)s"),
+        "<symbol>": Text('%(symbol)s'),
         "pad <allchar>": Text(" %(allchar)s "),
         "press <allchar>": Text("%(allchar)s"),
 

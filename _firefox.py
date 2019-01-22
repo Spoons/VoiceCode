@@ -13,7 +13,7 @@ class FirefoxRule(MappingRule):
         '[<n>] next tab': Key("J:%(n)d"),
         '[<n>] back tab': Key("K:%(n)d"),
         '<n> tab': Text("b%(n)s") + Key('enter'),
-        'tab': Text('b'),
+        'buffer': Text('b'),
         'open': Text('o'),
         'current open': Text('o'),
         'open tab': Text('t'),
