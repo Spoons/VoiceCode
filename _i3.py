@@ -27,10 +27,11 @@ class i3Rule(MappingRule):
         '[<n>] window right': Key('as-right:%(n)s'),
         '[<n>] window up': Key('as-up:%(n)s'),
         'workspace <w>': Key('a-%(w)s'),
+        'window <w>': Key('as-%(w)s'),
     }
     extras = [
         IntegerRef("w", 0, 10),
-        IntegerRef("n", 0, 10),
+        IntegerRef("n", 1, 10),
     ]
     defaults = {
         "n":1

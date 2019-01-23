@@ -96,6 +96,14 @@ def format_trail_phrase(dictation):
     """ phrases <dictation> """
     return " ".join(text.split_dictation(dictation)) + " "
 
+def format_double_phrase(dictation):
+    """ es phrases <dictation> """
+    return " " + " ".join(text.split_dictation(dictation)) + " "
+
+def format_pre_phrase(dictation):
+    """ es phrase <dictation> """
+    return " " + " ".join(text.split_dictation(dictation))
+
 def format_sentence(dictation):
     """ sentence <dictation> """
     words = text.split_dictation(dictation)

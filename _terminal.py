@@ -28,11 +28,11 @@ def ListToChoice(clist, name):
 slap = Key('enter')
 class TerminalRule(MappingRule):
     mapping = {
-        'git': Text('git'),
-        'git <gitcommand>': Text('git %(gitcommand)s'),
-        'move': Text('mv '),
-        'move home': Text('mv ~') + slap,
-        'move root': Text('mv ~') + slap,
+        'git': Text('git '),
+        'git <gitcommand>': Text('git %(gitcommand)s '),
+        'go': Text('cd '),
+        'go home': Text('cd ~') + slap,
+        'go root': Text('cd /') + slap,
         'cp': Text('cp -r'),
         'fuzzy': Text('c') + slap,
         'fuzzy select': Key('c-t'),
@@ -55,6 +55,7 @@ class TerminalRule(MappingRule):
         'resume': Text('fg') + slap,
         'system control': Text('systemctl'),
         'up directory': Text('../'),
+        'clear line': Key('c-c'),
     }
     extras = [
         ListToChoice(git_array, "gitcommand")
