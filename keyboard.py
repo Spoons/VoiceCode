@@ -75,6 +75,7 @@ class KeystrokeRule(MappingRule):
 
         "cut": release + Key("c-x/3"),
         "paste": release + Key("c-v/3"),
+        "shift paste": release + Key("cs-v/3"),
 
         "select all": release + Key("c-a/3"),
         "[(hold|press)] alt": Key("alt:down/3"),

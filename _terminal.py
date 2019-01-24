@@ -85,8 +85,8 @@ class TerminalRule(MappingRule):
         commands,
     ]
 
-terminal_context = ProxyAppContext(title='urxvt')
-grammar = Grammar('terminal')
+terminal_context = ProxyAppContext(cls_name='urxvt',cls='urxvt')
+grammar = Grammar('terminal', context=terminal_context)
 grammar.add_rule(TerminalRule())
 grammar.load()
 

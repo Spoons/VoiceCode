@@ -156,7 +156,7 @@ class VimNormalRule(MappingRule):
         '[<n>] slow gope': Key('c-u:%(n)d'),
         '[<n>] slow drop': Key('c-d:%(n)d'),
         'set mark <char>': Key('m, %(char)s'),
-        'paste': Key('p'),
+        'vim paste': Key('p'),
         'right split': Key('c-l'),
         'left split': Key('c-h'),
         'up split': Key('c-k'),
