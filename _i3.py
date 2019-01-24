@@ -10,7 +10,7 @@ class i3Rule(MappingRule):
         'open calibre': Key('as-m'),
         'open firefox': Key('a-w'),
         'open mixer': Key('a-a'),
-        'open pass': Key('a-d'),
+        'open (pass|password)': Key('a-p'),
         'open ranger': Key('a-r'),
         'open terminal': Key('a-enter'),
         'open thunar': Key('as-i'),

@@ -1,4 +1,11 @@
 from aenea import *
+
+def ListToChoice(clist, name):
+    command_dictionary = {}
+    for command in clist:
+        command_dictionary[command] = command
+    return(Choice(name, command_dictionary))
+
 git_array = [
     'add',
     'branch',
@@ -18,18 +25,27 @@ git_array = [
     'stash',
     'status',
     'tag',
+    'diff --cached',
 ]
-def ListToChoice(clist, name):
-    command_dictionary = {}
-    for command in clist:
-        command_dictionary[command] = command
-    return(Choice(name, command_dictionary))
+
+apt = ListToChoice([
+        'apt update',
+        'apt dist-upgrade',
+        'apt autoremove',
+], 'apt')
+
+commands = ListToChoice([
+    'tmux',
+    'df -h',
+], 'commands')
+
 
 slap = Key('enter')
 class TerminalRule(MappingRule):
     mapping = {
         'git': Text('git '),
         'git <gitcommand>': Text('git %(gitcommand)s '),
+        'dotgit <gitcommand>': Text('dg %(gitcommand)s '),
         'go': Text('cd '),
         'go home': Text('cd ~') + slap,
         'go root': Text('cd /') + slap,
@@ -49,6 +65,7 @@ class TerminalRule(MappingRule):
         'yay': Text('yay'),
         'x prop': Text('xprop') + slap,
         'sudo': Text('sudo'),
+        'sudo sue': Text('sudo su') + slap,
         'sue': Text('su'),
         'stop': Key('c-d'),
         'suspend': Key('c-z'),
@@ -56,9 +73,16 @@ class TerminalRule(MappingRule):
         'system control': Text('systemctl'),
         'up directory': Text('../'),
         'clear line': Key('c-c'),
+        'ssh': Text('ssh '),
+        '<apt>': Text('%(apt)s'),
+        '<commands>': Text('%(commands)s'),
+        'paste': Key('cs-v'),
+
     }
     extras = [
-        ListToChoice(git_array, "gitcommand")
+        ListToChoice(git_array, "gitcommand"),
+        apt,
+        commands,
     ]
 
 terminal_context = ProxyAppContext(title='urxvt')
