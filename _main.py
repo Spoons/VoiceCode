@@ -12,11 +12,9 @@ release = Key("shift:up, ctrl:up, alt:up, win:up")
 
 
 dictation = RuleRef(name="dictation", rule=words.FormatRule())
-# dictation_sequence = Repetition(dictation, min=1, max=5, name="dictation")
 
 command_list = []
 command_list.append(RuleRef(rule=keyboard.KeystrokeRule()))
-# command_list.append(RuleRef(rule=programs.ProgramsRule()))
 command_list.append(dictation)
 commands = Alternative(command_list, name="commands")
 

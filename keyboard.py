@@ -63,7 +63,7 @@ class KeystrokeRule(MappingRule):
         "end": Key("end"),
         "doc home": Key("c-home/3"),
         "doc end": Key("c-end/3"),
-        # Functional keys.
+
         "space [<n>]": release + Key("space:%(n)d"),
         "(enter|slap|slop) [<n>]": release + Key("enter:%(n)d"),
         "tab [<n>]": Key("tab:%(n)d"),
@@ -74,6 +74,7 @@ class KeystrokeRule(MappingRule):
         "super key": release + Key("win/3"),
 
         "cut": release + Key("c-x/3"),
+        "shift cut": release + Key("cs-x/3"),
         "paste": release + Key("c-v/3"),
         "shift paste": release + Key("cs-v/3"),
 
@@ -85,7 +86,6 @@ class KeystrokeRule(MappingRule):
         "[(hold|press)] control": Key("ctrl:down/3"),
         "release control": Key("ctrl:up"),
         "[(hold|press)] super": Key("win:down/3"),
-        "release super": Key("win:up"),
         "release [all]": release,
 
         # Closures.
@@ -98,33 +98,13 @@ class KeystrokeRule(MappingRule):
         "single quotes": Key("squote, squote, left/3"),
 
         # Shorthand multiple characters.
-        "double <letters>": Text("%(letters)s%(letters)s"),
-        "triple <letters>": Text("%(letters)s%(letters)s%(letters)s"),
         "double escape": Key("escape, escape"),  # Exiting menus.
-        'triple tab': Key('tab/3') * 3,
         'double tab': Key('tab/3') * 2,
         'triple back tab': Key('s-tab/3') * 3,
-
-        # Punctuation and separation characters, for quick editing.
-        # "colon [<n>]": Key("colon/2:%(n)d"),
-        # "semi-colon [<n>]": Key("semicolon/2:%(n)d"),
-        # "comma [<n>]": Key("comma/2:%(n)d"),
-        # "(dot|period|dit|point) [<n>]": Key("dot:%(n)d"),  # cannot be followed by a repeat count
-        # "(dash|hyphen|minus) [<n>]": Key("hyphen/2:%(n)d"),
-        # "underscore [<n>]": Key("underscore/2:%(n)d"),
-
-        # 'langle [<n>]': Key('langle:%(n)d'),
-        # 'lace [<n>]':   Key('lbrace:%(n)d'),
-        # '(lack|lair) [<n>]':   Key('lbracket:%(n)d'),
-        # 'len [<n>]':    Key('lparen:%(n)d'),
-        # 'rangle [<n>]': Key('rangle:%(n)d'),
-        # 'race [<n>]':   Key('rbrace:%(n)d'),
-        # '(rack|rare) [<n>]':   Key('rbracket:%(n)d'),
-        # '(ren|wren) [<n>]':   Key('rparen:%(n)d'),
+        'triple tab': Key('tab/3') * 3,
 
         "act [<n>]": Key("escape:%(n)d"),
-        # "calm [<n>]": Key("comma:%(n)d"),
-        # 'into': Key('space,bar,space'),
+
         'care': Key('home'),
         'doll': Key('end'),
 
@@ -145,10 +125,8 @@ class KeystrokeRule(MappingRule):
         'suspend': Key('c-z'),
 
         'number <num>': Text("%(num)d"),
-        "<letters>": Text("%(letters)s"),
-        "<symbol>": Text('%(symbol)s'),
         "pad <allchar>": Text(" %(allchar)s "),
-        "press <allchar>": Text("%(allchar)s"),
+        "<allchar>": Text("%(allchar)s"),
 
     }
     extras = [

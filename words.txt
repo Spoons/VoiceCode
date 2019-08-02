@@ -16,30 +16,6 @@ def format_score(dictation):          # Function name must start with "format_".
     """ score <dictation> """         # Docstring defining spoken-form.
     return "_".join(text.split_dictation(dictation))  # Put underscores between words.
 
-# Format: some_words_
-def format_trail_score(dictation):
-    """ trail score <dictation> """
-    return "_".join(text.split_dictation(dictation)) + "_"
-
-# Format: _some_words
-def format_pre_score(dictation):
-    """ pre score <dictation> """
-    return "_" + "_".join(text.split_dictation(dictation))
-
-# Format: some_words()
-def format_under_function(dictation):
-    """ func score <dictation> """
-    return "_".join(text.split_dictation(dictation)) + "()"
-
-# Format: FLAGS_some_words
-def format_flag(dictation):
-    """ flag score <dictation> """
-    return "FLAGS_" + "_".join(text.split_dictation(dictation))
-
-# Format: some_words::
-def format_namespace(dictation):
-    """ namespace <dictation> """
-    return "_".join(text.split_dictation(dictation)) + "::"
 
 # Format: SomeWords
 def format_proper(dictation):
@@ -50,20 +26,8 @@ def format_proper(dictation):
 
 # Format: somewords
 def format_jumble(dictation):
-    """ [all] jumble <dictation> """
+    """ jumble <dictation> """
     return "".join(text.split_dictation(dictation))
-
-# Format: SOMEWORDS
-def format_upper_jumble(dictation):
-    """ upper jumple <dictation> """
-    words = [word.upper() for word in text.split_dictation(dictation)]
-    return "".join(words)
-
-# Format: SOME_WORDS
-def format_upper_score(dictation):
-    """ upper score <dictation> """
-    words = [word.upper() for word in text.split_dictation(dictation)]
-    return "_".join(words)
 
 # Format: someWords
 def format_camel(dictation):
@@ -76,47 +40,17 @@ def format_dashes(dictation):
     """ dashes <dictation> """
     return "-".join(text.split_dictation(dictation))
 
-
 # Format: some.words
 def format_dots(dictation):
-    """ dots <dictation> """
+    """ dotify <dictation> """
     return ".".join(text.split_dictation(dictation))
 
 # Format: some words
 def format_phrase(dictation):
-    """ (phrase|word) <dictation> """
+    """ format <dictation> """
     return " ".join(text.split_dictation(dictation))
 
-def format_upper_phrase(dictation):
-    """ upper phrase <dictation> """
-    words = text.split_dictation(dictation)
-    return " ".join(w.upper() for w in words)
-
-def format_trail_phrase(dictation):
-    """ phrases <dictation> """
-    return " ".join(text.split_dictation(dictation)) + " "
-
-def format_double_phrase(dictation):
-    """ es phrases <dictation> """
-    return " " + " ".join(text.split_dictation(dictation)) + " "
-
-def format_pre_phrase(dictation):
-    """ es phrase <dictation> """
-    return " " + " ".join(text.split_dictation(dictation))
-
-def format_sentence(dictation):
-    """ sentence <dictation> """
-    words = text.split_dictation(dictation)
-    words[0] = words[0].capitalize();
-    return " ".join(words)
-
-def format_trail_sentence(dictation):
-    """ sentences <dictation> """
-    words = text.split_dictation(dictation)
-    words[0] = words[0].capitalize();
-    return " ".join(words) + " "
-
-# Format:  some words 
+# Format:  some words
 def format_padded(dictation):
     """ padded <dictation> """
     return " " + " ".join(text.split_dictation(dictation)) + " "
