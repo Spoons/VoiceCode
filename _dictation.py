@@ -1,4 +1,4 @@
-from aenea import *
+from dragonfly import *
 
 class InsertMode(MappingRule):
     mapping = {
@@ -49,7 +49,7 @@ InsertModeDisablerGrammar.load()
 
 def unload():
     global InsertModeGrammar
-    if InsertModeGrammar: 
+    if InsertModeGrammar:
         InsertModeGrammar.unload()
     InsertModeGrammar = None
 

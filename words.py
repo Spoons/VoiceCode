@@ -1,5 +1,5 @@
-import os 
-from aenea import *
+import os
+from dragonfly import *
 from common import *
 # Make sure dragonfly errors show up in NatLink messages.
 # dragonfly.log.setup_log()
@@ -48,8 +48,8 @@ if namespace:
 # TODO: revisit custom dictation tends to only custom words when they are the
 # only word of the dictation contains alternative which contains custom words
 # and dictation
-saved_word_list = List("saved_word_list", saved_words) 
-saved_word_list_ref = ListRef(None, saved_word_list) 
+saved_word_list = List("saved_word_list", saved_words)
+saved_word_list_ref = ListRef(None, saved_word_list)
 custom_dictation = Alternative([saved_word_list_ref, Dictation()], name="dictation")
 
 # create our formatting role which contains the format functions and are custom dictation
